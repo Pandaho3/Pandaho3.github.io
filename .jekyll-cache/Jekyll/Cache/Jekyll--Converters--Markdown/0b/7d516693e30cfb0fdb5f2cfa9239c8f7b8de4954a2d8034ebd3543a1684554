@@ -1,0 +1,387 @@
+I"G*<p>扫描ip网段主机详细信息，如操作系统、端口等</p>
+
+<h2 id="简介">简介</h2>
+
+<p>Nmap，也就是Network Mapper，最早是Linux下的网络扫描和嗅探工具包。</p>
+
+<p>Nmap是一个网络连接端扫描软件，用来扫描网上电脑开放的网络连接端。确定哪些服务运行在哪些连接端，并且推断计算机运行哪个操作系统（这是亦称 fingerprinting）。它是网络管理员必用的软件之一，以及用以评估网络系统安全。</p>
+
+<p>正如大多数被用于网络安全的工具，Nmap 也是不少黑客及骇客（又称脚本小子）爱用的工具 。系统管理员可以利用Nmap来探测工作环境中未经批准使用的服务器，但是黑客会利用Nmap来搜集目标电脑的网络设定，从而计划攻击的方法。</p>
+
+<p>Nmap 在黑客帝国(The Matrix)中，连同SSH1的32位元循环冗余校验漏洞，被崔妮蒂用以入侵发电站的能源管理系统。</p>
+
+<p>基本功能有三个：</p>
+
+<ul>
+  <li>一是探测一组主机是否在线；</li>
+  <li>其次是扫描主机端口，嗅探所提供的网络服务；</li>
+  <li>还可以推断主机所用的操作系统     。</li>
+</ul>
+
+<p>Nmap可用于扫描仅有两个节点的LAN，直至500个节点以上的网络。Nmap 还允许用户定制扫描技巧。通常，一个简单的使用ICMP协议的ping操作可以满足一般需求；也可以深入探测UDP或者TCP端口，直至主机所使用的操作系统；还可以将所有探测结果记录到各种格式的日志中， 供进一步分析操作。</p>
+
+<h3 id="背景说明">背景说明</h3>
+
+<ul>
+  <li>Python3</li>
+  <li>Windows</li>
+  <li>Nmap</li>
+</ul>
+
+<h2 id="流程">流程</h2>
+
+<p>下载地址： <a href="https://nmap.org/">Nmap官网</a></p>
+
+<p>安装python-nmap pip3 install python-nmap</p>
+
+<p>Nmap_ping扫描：</p>
+
+<p>import nmap</p>
+
+<p>import sys</p>
+
+<p><em>def</em> nmap_ping_scan(<em>network_prefix</em>):</p>
+
+<p># 创建一个扫描实例</p>
+
+<p>nm = nmap.PortScanner()</p>
+
+<p># 配置nmap参数</p>
+
+<p>ping_scan_raw_result = nm.scan(<em>hosts</em>=network_prefix, <em>arguments</em>=’-v -n -sn’)</p>
+
+<p>host_list = []</p>
+
+<p># 分析扫描结果，并放入主机清单</p>
+
+<p>for Result in ping_scan_raw_result[‘scan’].values():</p>
+
+<p>if Result[‘status’][‘state’] == ‘up’:</p>
+
+<p>​       host_list.append(Result[‘addresses’][‘ipv4’])</p>
+
+<p>return host_list</p>
+
+<p>if <strong>name</strong> == ‘<strong>main</strong>’:</p>
+
+<p>for host in nmap_ping_scan(sys.argv[1]):</p>
+
+<p>print(‘%-20s %5s’ % (host, ‘is UP’))</p>
+
+<p>输出：</p>
+
+<p>C:\Users&gt; python .\nmap_ping扫描.py 192.168.0.0/24</p>
+
+<p>192.168.0.102    is UP
+ 192.168.0.104    is UP
+ 192.168.0.105    is UP
+ 192.168.0.109    is UP
+ 192.168.0.103    is UP</p>
+
+<p>Nmap_A综合扫描：</p>
+
+<p>import nmap
+ import sys</p>
+
+<p><em>def</em> nmap_A_scan(<em>network_prefix</em>):</p>
+
+<p>nm = nmap.PortScanner()</p>
+
+<p># 配置nmap扫描参数</p>
+
+<p>scan_raw_result = nm.scan(<em>hosts</em>=network_prefix, <em>arguments</em>=’-v -n -A’)</p>
+
+<p># 分析扫描结果</p>
+
+<p>for host, result in scan_raw_result[‘scan’].items():</p>
+
+<p>if result[‘status’][‘state’] == ‘up’:</p>
+
+<p>print(‘#’ * 17 + ‘Host:’ + host + ‘#’ * 17)</p>
+
+<p>print(‘-‘ * 20 + ‘操作系统猜测’ + ‘-‘ * 20)</p>
+
+<p>for os in result[‘osmatch’]:</p>
+
+<p>​    print(‘操作系统为：’ + os[‘name’] + ‘ ‘ *</p>
+
+<p>​      3 + ‘准确度为：’ + os[‘accuracy’])</p>
+
+<p>idno = 1</p>
+
+<p>try:</p>
+
+<p>​    for port in result[‘tcp’]:</p>
+
+<p>​     try:</p>
+
+<p>​      print(‘-‘ * 17 + ‘TCP服务器详细信息’ +</p>
+
+<p>​        ‘[’ + <em>str</em>(idno) + ‘]’ + ‘-‘ * 17)</p>
+
+<p>​      idno += 1</p>
+
+<p>​      print(‘TCP端口号：’ + <em>str</em>(port))</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘状态：’ + result[‘tcp’][port][‘state’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘原因：’ + result[‘tcp’][port][‘reason’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘额外信息：’ + result[‘tcp’][port][‘extrainfo’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘名字：’ + result[‘tcp’][port][‘name’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘版本：’ + result[‘tcp’][port][‘version’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘产品：’ + result[‘tcp’][port][‘product’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘CPE：’ + result[‘tcp’][port][‘cpe’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘脚本：’ + result[‘tcp’][port][‘script’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​     except:</p>
+
+<p>​      pass</p>
+
+<p>except:</p>
+
+<p>​    pass</p>
+
+<p>idno = 1</p>
+
+<p>try:</p>
+
+<p>​    for port in result[‘udp’]:</p>
+
+<p>​     try:</p>
+
+<p>​      print(‘-‘ * 17 + ‘UDP服务器详细信息’ +</p>
+
+<p>​        ‘[’ + <em>str</em>(idno) + ‘]’ + ‘-‘ * 17)</p>
+
+<p>​      idno += 1</p>
+
+<p>​      print(‘UDP端口号：’ + <em>str</em>(port))</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘状态：’ + result[‘udp’][port][‘state’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘原因：’ + result[‘udp’][port][‘reason’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘额外信息：’ + result[‘udp’][port][‘extrainfo’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘名字：’ + result[‘udp’][port][‘name’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘版本：’ + result[‘udp’][port][‘version’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘产品：’ + result[‘udp’][port][‘product’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘CPE：’ + result[‘udp’][port][‘cpe’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​      try:</p>
+
+<p>​       print(‘脚本：’ + result[‘udp’][port][‘script’])</p>
+
+<p>​      except:</p>
+
+<p>​       pass</p>
+
+<p>​     except:</p>
+
+<p>​      pass</p>
+
+<p>except:</p>
+
+<p>​    pass</p>
+
+<p>if <strong>name</strong> == ‘<strong>main</strong>’:</p>
+
+<p>nmap_A_scan(sys.argv[1])</p>
+
+<p>输出：</p>
+
+<p>C:\Users&gt; python .\nmap_A_scan.py 192.168.0.103<br />
+ #################Host:192.168.0.103#################<br />
+ ——————–操作系统猜测——————–<br />
+ 操作系统为：Microsoft Windows 7  准确度为：99<br />
+ 操作系统为：Microsoft Windows 8.1  准确度为：99<br />
+ 操作系统为：Microsoft Windows Vista, Windows 7 SP1, or Windows 8.1 Update 1  准确度为：97<br />
+ 操作系统为：Microsoft Windows 10 1607  准确度为：96<br />
+ 操作系统为：Microsoft Windows 7 or 8.1 R1 or Server 2008 R2 SP1  准确度为：96<br />
+ 操作系统为：Microsoft Windows 10  准确度为：94<br />
+ 操作系统为：Microsoft Windows Vista SP2 or Windows 7 Ultimate SP0 - SP1  准确度为：94<br />
+ 操作系统为：Microsoft Windows Vista  准确度为：94<br />
+ 操作系统为：Microsoft Windows 7 Professional SP1  准确度为：93<br />
+ 操作系统为：Microsoft Windows 7 SP1  准确度为：93<br />
+ —————–TCP服务器详细信息[1]—————–<br />
+ TCP端口号：135<br />
+ 状态：open<br />
+ 原因：syn-ack<br />
+ 额外信息：<br />
+ 名字：msrpc<br />
+ 版本：<br />
+ 产品：Microsoft Windows RPC<br />
+ CPE：cpe:/o:microsoft:windows<br />
+ —————–TCP服务器详细信息[2]—————–<br />
+ TCP端口号：139<br />
+ 状态：open<br />
+ 原因：syn-ack<br />
+ 额外信息：<br />
+ 名字：netbios-ssn<br />
+ 版本：<br />
+ 产品：Microsoft Windows netbios-ssn<br />
+ CPE：cpe:/o:microsoft:windows<br />
+ —————–TCP服务器详细信息[3]—————–<br />
+ TCP端口号：445<br />
+ 状态：open<br />
+ 原因：syn-ack<br />
+ 额外信息：workgroup: WORKGROUP<br />
+ 名字：microsoft-ds<br />
+ 版本：<br />
+ 产品：Windows 7 Home Premium 7601 Service Pack 1 microsoft-ds<br />
+ CPE：cpe:/o:microsoft:windows<br />
+ —————–TCP服务器详细信息[4]—————–<br />
+ TCP端口号：1025<br />
+ 状态：open<br />
+ 原因：syn-ack<br />
+ 额外信息：<br />
+ 名字：msrpc<br />
+ 版本：<br />
+ 产品：Microsoft Windows RPC<br />
+ CPE：cpe:/o:microsoft:windows<br />
+ —————–TCP服务器详细信息[5]—————–<br />
+ TCP端口号：1026<br />
+ 状态：open<br />
+ 原因：syn-ack<br />
+ 额外信息：<br />
+ 名字：msrpc<br />
+ 版本：<br />
+ 产品：Microsoft Windows RPC<br />
+ CPE：cpe:/o:microsoft:windows<br />
+ —————–TCP服务器详细信息[6]—————–<br />
+ TCP端口号：1027<br />
+ 状态：open<br />
+ 原因：syn-ack<br />
+ 额外信息：<br />
+ 名字：msrpc<br />
+ 版本：<br />
+ 产品：Microsoft Windows RPC<br />
+ CPE：cpe:/o:microsoft:windows<br />
+ —————–TCP服务器详细信息[7]—————–<br />
+ TCP端口号：1028<br />
+ 状态：open<br />
+ 原因：syn-ack<br />
+ 额外信息：<br />
+ 名字：msrpc<br />
+ 版本：<br />
+ 产品：Microsoft Windows RPC<br />
+ CPE：cpe:/o:microsoft:windows<br />
+ —————–TCP服务器详细信息[8]—————–<br />
+ TCP端口号：2869<br />
+ 状态：open<br />
+ 原因：syn-ack<br />
+ 额外信息：SSDP/UPnP<br />
+ 名字：http<br />
+ 版本：2.0<br />
+ 产品：Microsoft HTTPAPI httpd<br />
+ CPE：cpe:/o:microsoft:windows</p>
+
+<p>其中需要注意的问题：</p>
+
+<p>1、功能更改<em>arguments</em>的值；</p>
+
+<p>2、输入的值可选择外部输入sys.argv[1]，也可以直接添加域名之类的替换掉这个值；</p>
+
+<p>3、安装好nmap后，需要在import nmap处按住Ctrl，点击进入nmap，添加安装路径</p>
+
+<p><em>def</em> <strong>init</strong>(<em>self</em>, <em>nmap_search_path</em>=(‘nmap’, ‘/usr/bin/nmap’, ‘/usr/local/bin/nmap’, ‘/sw/bin/nmap’, ‘/opt/local/bin/nmap’, <em>r</em>‘D:\Nmap\nmap.exe’)):</p>
+:ET

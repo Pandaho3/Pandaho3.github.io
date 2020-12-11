@@ -1,0 +1,23 @@
+I"v
+<div id="tags" class="d-flex flex-wrap ml-xl-2 mr-xl-2">
+
+
+
+
+
+
+  <div>
+    <a class="tag" href="/tags/blog/">blog<span class="text-muted">1</span></a>
+  </div>
+
+  <div>
+    <a class="tag" href="/tags/poetry/">poetry<span class="text-muted">1</span></a>
+  </div>
+
+  <div>
+    <a class="tag" href="/tags/python/">python<span class="text-muted">2</span></a>
+  </div>
+
+
+</div>
+:ET
