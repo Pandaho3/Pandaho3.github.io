@@ -121,5 +121,8 @@ pin: true
 6、设置邮箱	Git config --global user.email ' ? '  
 7、上传代码到github远程仓库 git push -u origin master  
 
+##  清空github仓库
+rm -rf .git 删除git记录 ，重复git流程。
+
 
 未完待续……………………
