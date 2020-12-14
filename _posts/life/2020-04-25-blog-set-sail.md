@@ -1,14 +1,13 @@
 ---
 title: Blog Set Sail
 author: Pandaho
-date: 2020-04-25 19:00:00 
+date: 2020-04-25 19:00:00 +0800
 categories: [life] 
 tags: [blog]
 toc: true
 image: /assets/img/Blog Set Sail/cover.png
 ---
 
-[toc]
 
 “Yeah It's on. ” —— Pandaho 的 Blog 正式开通了。
 
