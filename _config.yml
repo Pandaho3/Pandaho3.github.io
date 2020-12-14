@@ -8,36 +8,36 @@
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 #--------------------------
 
-title: Grace                          # the main title
+title: Pandaho                          # the main title
 
-tagline: 10.6.IT  # only title + add + minus link + add
+tagline: 图以鸿鹄为志，破以万难为乐！  # only title + add + minus link + add
 
 description: >-                        # used by seo meta and the atom feed
-  A webpages focus on the IT learning path.
+  Welcome to my blog.
 
 # Replace with the website url, e.g. 'https://username.github.io'
-url: 'https://ocholuo.github.io/'
+url: 'https://pandaho3.github.io/'
 
-author: Grace JyL                 # change to your full name
+author: Pandaho                 # change to your full name
 
-avatar: /assets/img/sample/rabbit.jpg   # support internet resources
+avatar: /assets/img/sample/avatar.jpg   # support internet resources
 
 github:
-  username: ocholuo             # change to your github username
+  username: Pandaho3             # change to your github username
 
 twitter:
   username: twitter_username            # change to your twitter username
 
 social:
-  name: Grace JyL                  # it will shows as the copyright owner in Footer
-  email: Lgraceye@hotmail.com             # change to your email address
+  name: Pandaho                  # it will shows as the copyright owner in Footer
+  email:              # change to your email address
   links:
     # The first element serves as the copyright owner's link
     # - https://twitter.com/username      # change to your twitter homepage
     - https://github.com/ocholuo       # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    - https://www.linkedin.com/in/grace-jy-l-0aaa32a1/
+    #- https://www.linkedin.com/in/grace-jy-l-0aaa32a1/
 
 google_site_verification: google_meta_tag_verification # change to your verification string
 
@@ -52,19 +52,19 @@ baseurl: ''
 timezone: America/New_York
 
 google_analytics:
-  id: 'UA-179830187-1'          # Fill with your Google Analytics ID
+  id: ''          # Fill with your Google Analytics ID
   pv:
     # The Google Analytics pageviews switch.
     # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
     enabled: true
     # the next options only valid when `google_analytics.pv` is enabled.
-    proxy_url: 'https://myochosite-291718.appspot.com'  # the URL of proxy_endpoint
-    proxy_endpoint: 'https://myochosite-291718.appspot.com/query?id=ahNwfm15b2Nob3NpdGUtMjkxNzE4chULEghBcGlRdWVyeRiAgIDo14eBCgw'
+    proxy_url: ''  # the URL of proxy_endpoint
+    proxy_endpoint: ''
     cache: true  # pv data local cache, good for the users from GFW area.
 
 disqus:
   comments: true  # boolean type, the global switch for posts comments.
-  shortname: 'https-ocholuo-github-io'    # Fill with your Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
+  shortname: ''    # Fill with your Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
 
 
 # Prefer color scheme setting, available values:
@@ -81,7 +81,7 @@ theme_mode: dual
 # boolean type, global switch for ToC in posts.
 toc: true
 
-paginate: 15
+paginate: 30
 
 markdown: kramdown
 
