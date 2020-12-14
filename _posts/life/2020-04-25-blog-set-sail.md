@@ -1,7 +1,7 @@
 ---
 title: Blog Set Sail
 author: Pandaho
-date: 2020-04-25 20:00:00 
+date: 2020-04-25 19:00:00 
 categories: [life] 
 tags: [blog]
 toc: true
@@ -67,7 +67,7 @@ gem 'tzinfo-data'在Windows上进行开发时是必需的（通常Gemfile在Wind
 
 ##  主题
 
-下载该主题后在项目根目录，开始初始化:               $ bash tools/init.sh
+下载该主题后在项目根目录，开始初始化:               $ bash tools/init.sh  
 如果你不打算部署到 GitHub Pages, 在上述命令后附加参数选项 --no-gh。
 
 上述脚本完成了以下工作，从你的仓库中删除了:  
