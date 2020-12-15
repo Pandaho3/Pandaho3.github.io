@@ -1,7 +1,7 @@
 ---
 title: Blog Set Sail
 author: Pandaho
-date: 2020-04-25 19:00:00 +0800
+date: 2020-04-25 19:00:00 +0000
 categories: [life] 
 tags: [blog]
 toc: true
