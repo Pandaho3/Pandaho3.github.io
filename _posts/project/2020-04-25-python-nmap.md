@@ -2,7 +2,7 @@
 title: Python自动化之nmap端口扫描
 author: Pandaho
 date: 2020-04-25 20:00:00 
-categories: [project] 
+categories: [Project] 
 tags: [python]
 image: /assets/img/python nmap/cover.png
 ---

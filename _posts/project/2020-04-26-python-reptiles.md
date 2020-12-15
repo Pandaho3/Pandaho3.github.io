@@ -2,7 +2,7 @@
 title: 使用Python爬取公众号图片并识别图片文字自动重命名
 author: Pandaho
 date: 2020-04-26 20:00:00 
-categories: [project] 
+categories: [Project] 
 tags: [python]
 image: /assets/img/python reptiles/cover.png
 ---
