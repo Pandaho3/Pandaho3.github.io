@@ -79,7 +79,7 @@ disqus:
 theme_mode: dual
 
 # boolean type, global switch for ToC in posts.
-toc: false
+toc: tust
 
 paginate: 10
 
