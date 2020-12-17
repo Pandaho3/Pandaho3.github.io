@@ -3,7 +3,7 @@ title: 深信服AC DROPFLAG appcontrol错误排查
 author: Pandaho
 date: 2020-10-10 20:00:00 +0000
 categories: [Project] 
-tags: [Sangfor]
+tags: [sangfor]
 image: /assets/img/sangfor-appcontrol/cover.png
 ---
 
