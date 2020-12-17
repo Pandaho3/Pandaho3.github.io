@@ -3,7 +3,7 @@ title: 使用虚链路来解决OSPF区域间路由不完整问题
 author: Pandaho
 date: 2020-06-20 20:00:00 +0000
 categories: [Project] 
-tags: [OSPF]
+tags: [ospf]
 image: /assets/img/ospf-virtual-link/cover.png
 ---
 
