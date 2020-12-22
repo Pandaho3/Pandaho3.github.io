@@ -13,21 +13,21 @@ title: Pandaho
 
 # About Me 
 
-Bright, eager, passionate practician, and an enthusiast of Information Security with an MS (Hons.) in Cyber Security and Information Assurance. 
+激情、坚定、勇敢的实践者，对知识永远保持好奇心，永远不断前进的唯物主义者，当然也是我大熊猫的忠实粉，这可是个Power&lovery并存的存在，相信没有人不喜欢把。
 
-> Quick, imaginative, and strategic mind;
+> 快速学习者，喜欢抓住一切机会来提高知识和学习新技术；
 > 
-> Quick learner and like to take every chance to improve the knowledge and learn new technology;
+> 思考，富有想象力，先思后行者；
 > 
-> Highly curious, goal-oriented;
+> 高度好奇者，制定目标不断前进；
 > 
-> Always passionate, always up for a challenge and unforeseen possibilities;
+> 勇敢、冒险者，勇于尝试一切未知邻域；
 > 
-> Like breaking into things; both physically and virtually;
+> 敏锐、执行者，处理事务灵活多变；
 
-Currently, I work as a Cloud Security Analyst and spend my days studying courses for my CISSP& OSCP certification, being involved in projects for courses like Network Security, Secure Computer Systems and Software development. 
+目前，我是一名网络工程师，我这一生，在已经走过的时间里，我曾是一名服务员、弱电工、设计师、开发者，到了20岁这个分水岭我毅然投入网络事业，我希望我的未来能一直朝着网络安全不断前进与深入。
 
-Chess, piano and dance are three constructive hobbies I pursue. 
+篮球、健身、美食也是我的热爱。
 
 ---
 
