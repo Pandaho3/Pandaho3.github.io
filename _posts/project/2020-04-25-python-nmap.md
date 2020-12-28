@@ -42,23 +42,18 @@ Nmap可用于扫描仅有两个节点的LAN，直至500个节点以上的网络�
 
 Nmap_ping扫描：
 
+```python
 import nmap
 
 import sys
 
-*def* nmap_ping_scan(*network_prefix*):
+*def* nmap_ping_scan(*network_prefix*):    # 创建一个扫描实例
 
-\# 创建一个扫描实例
-
-nm = nmap.PortScanner()
-
-\# 配置nmap参数
+nm = nmap.PortScanner()   # 配置nmap参数
 
 ping_scan_raw_result = nm.scan(*hosts*=network_prefix, *arguments*='-v -n -sn')
 
-host_list = []
-
-\# 分析扫描结果，并放入主机清单
+host_list = []     # 分析扫描结果，并放入主机清单
 
 for Result in ping_scan_raw_result['scan'].values():
 
@@ -73,9 +68,13 @@ if __name__ == '__main__':
 for host in nmap_ping_scan(sys.argv[1]):
 
   print('%-20s %5s' % (host, 'is UP'))
+```
+
+
 
 输出：
 
+```
 C:\Users> python .\nmap_ping扫描.py 192.168.0.0/24
 
 192.168.0.102    is UP
@@ -83,21 +82,19 @@ C:\Users> python .\nmap_ping扫描.py 192.168.0.0/24
  192.168.0.105    is UP
  192.168.0.109    is UP
  192.168.0.103    is UP
+```
 
 Nmap_A综合扫描：
 
+```python
 import nmap
  import sys
 
 *def* nmap_A_scan(*network_prefix*):
 
-nm = nmap.PortScanner()
+nm = nmap.PortScanner()    # 配置nmap扫描参数
 
-\# 配置nmap扫描参数
-
-scan_raw_result = nm.scan(*hosts*=network_prefix, *arguments*='-v -n -A')
-
-\# 分析扫描结果
+scan_raw_result = nm.scan(*hosts*=network_prefix, *arguments*='-v -n -A')    # 分析扫描结果
 
 for host, result in scan_raw_result['scan'].items():
 
@@ -292,9 +289,11 @@ for host, result in scan_raw_result['scan'].items():
 if __name__ == '__main__':
 
 nmap_A_scan(sys.argv[1])
+```
 
 输出：
 
+```
 C:\Users> python .\nmap_A_scan.py 192.168.0.103  
  \#################Host:192.168.0.103#################  
  --------------------操作系统猜测--------------------  
@@ -380,6 +379,9 @@ C:\Users> python .\nmap_A_scan.py 192.168.0.103
  版本：2.0  
  产品：Microsoft HTTPAPI httpd  
  CPE：cpe:/o:microsoft:windows  
+```
+
+
 
 其中需要注意的问题：
 
@@ -389,4 +391,7 @@ C:\Users> python .\nmap_A_scan.py 192.168.0.103
 
 3、安装好nmap后，需要在import nmap处按住Ctrl，点击进入nmap，添加安装路径
 
+```
 *def* __init__(*self*, *nmap_search_path*=('nmap', '/usr/bin/nmap', '/usr/local/bin/nmap', '/sw/bin/nmap', '/opt/local/bin/nmap', *r*'D:\Nmap\nmap.exe')):
+```
+
