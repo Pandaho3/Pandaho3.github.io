@@ -38,7 +38,11 @@ Nmap可用于扫描仅有两个节点的LAN，直至500个节点以上的网络�
 
 下载地址： [Nmap官网](https://nmap.org/)
 
-安装python-nmap pip3 install python-nmap
+安装python-nmap 
+
+```
+pip install python-nmap
+```
 
 Nmap_ping扫描：
 
@@ -47,27 +51,26 @@ import nmap
 
 import sys
 
-*def* nmap_ping_scan(*network_prefix*):    # 创建一个扫描实例
+def nmap_ping_scan(network_prefix):    # 创建一个扫描实例
 
-nm = nmap.PortScanner()   # 配置nmap参数
+  nm = nmap.PortScanner()   # 配置nmap参数
 
-ping_scan_raw_result = nm.scan(*hosts*=network_prefix, *arguments*='-v -n -sn')
+  ping_scan_raw_result = nm.scan(hosts=network_prefix, arguments='-v -n -sn')
 
-host_list = []     # 分析扫描结果，并放入主机清单
+  host_list = []     # 分析扫描结果，并放入主机清单
 
-for Result in ping_scan_raw_result['scan'].values():
+  for Result in ping_scan_raw_result['scan'].values():
 
-  if Result['status']['state'] == 'up':
+      if Result['status']['state'] == 'up':
+          host_list.append(Result['addresses']['ipv4'])
 
-​       host_list.append(Result['addresses']['ipv4'])
-
-return host_list
+  return host_list
 
 if __name__ == '__main__':
 
-for host in nmap_ping_scan(sys.argv[1]):
+    for host in nmap_ping_scan(sys.argv[1]):
 
-  print('%-20s %5s' % (host, 'is UP'))
+        print('%-20s %5s' % (host, 'is UP'))
 ```
 
 
@@ -88,207 +91,105 @@ Nmap_A综合扫描：
 
 ```python
 import nmap
- import sys
-
-*def* nmap_A_scan(*network_prefix*):
-
-nm = nmap.PortScanner()    # 配置nmap扫描参数
-
-scan_raw_result = nm.scan(*hosts*=network_prefix, *arguments*='-v -n -A')    # 分析扫描结果
-
-for host, result in scan_raw_result['scan'].items():
-
-  if result['status']['state'] == 'up':
-
-   print('#' * 17 + 'Host:' + host + '#' * 17)
-
-   print('-' * 20 + '操作系统猜测' + '-' * 20)
-
-   for os in result['osmatch']:
-
-​    print('操作系统为：' + os['name'] + ' ' *
-
-​      3 + '准确度为：' + os['accuracy'])
-
-   idno = 1
-
-   try:
-
-​    for port in result['tcp']:
-
-​     try:
-
-​      print('-' * 17 + 'TCP服务器详细信息' +
-
-​        '[' + *str*(idno) + ']' + '-' * 17)
-
-​      idno += 1
-
-​      print('TCP端口号：' + *str*(port))
-
-​      try:
-
-​       print('状态：' + result['tcp'][port]['state'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('原因：' + result['tcp'][port]['reason'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('额外信息：' + result['tcp'][port]['extrainfo'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('名字：' + result['tcp'][port]['name'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('版本：' + result['tcp'][port]['version'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('产品：' + result['tcp'][port]['product'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('CPE：' + result['tcp'][port]['cpe'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('脚本：' + result['tcp'][port]['script'])
-
-​      except:
-
-​       pass
-
-​     except:
-
-​      pass
-
-   except:
-
-​    pass
-
-   idno = 1
-
-   try:
-
-​    for port in result['udp']:
-
-​     try:
-
-​      print('-' * 17 + 'UDP服务器详细信息' +
-
-​        '[' + *str*(idno) + ']' + '-' * 17)
-
-​      idno += 1
-
-​      print('UDP端口号：' + *str*(port))
-
-​      try:
-
-​       print('状态：' + result['udp'][port]['state'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('原因：' + result['udp'][port]['reason'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('额外信息：' + result['udp'][port]['extrainfo'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('名字：' + result['udp'][port]['name'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('版本：' + result['udp'][port]['version'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('产品：' + result['udp'][port]['product'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('CPE：' + result['udp'][port]['cpe'])
-
-​      except:
-
-​       pass
-
-​      try:
-
-​       print('脚本：' + result['udp'][port]['script'])
-
-​      except:
-
-​       pass
-
-​     except:
-
-​      pass
-
-   except:
-
-​    pass
-
+import sys
+
+def nmap_A_scan(network_prefix):
+    nm = nmap.PortScanner()    # 配置nmap扫描参数
+    scan_raw_result = nm.scan(hosts=network_prefix, arguments='-v -n -A')    # 分析扫描结果
+    for host, result in scan_raw_result['scan'].items():
+        if result['status']['state'] == 'up':
+            print('#'*17 + 'Host:' + host + '#'*17)
+            print('-' * 20 + '操作系统猜测' + '-' * 20)
+            for os in result['osmatch']:
+              print('操作系统为：' + os['name'] + '   准确度为：' + os['accuracy'])
+            idno = 1
+            try:
+                for port in result['tcp']:
+                    try:
+                        print('-' * 17 + 'TCP服务器详细信息' + '[' + str(idno) + ']' + '-' * 17)
+                        idno += 1
+                        print('TCP端口号：' + str(port))
+                        try:
+                            print('状态：' + result['tcp'][port]['state'])
+                        except:
+                            pass
+                        try:
+                            print('原因：' + result['tcp'][port]['reason'])
+                        except:
+                            pass
+                        try:
+                            print('额外信息：' + result['tcp'][port]['extrainfo'])
+                        except:
+                            pass
+                        try:
+                            print('名字：' + result['tcp'][port]['name'])
+                        except:
+                            pass
+                        try: 
+                            print('版本：' + result['tcp'][port]['version'])
+                        except:
+                            pass
+                        try:
+                            print('产品：' + result['tcp'][port]['product'])
+                        except:
+                            pass
+                        try:
+                            print('CPE：' + result['tcp'][port]['cpe'])
+                        except:
+                            pass
+                        try:
+                            print('脚本：' + result['tcp'][port]['script'])
+                        except:
+                            pass
+                    except:
+                        pass
+            except:
+                pass
+            idno = 1
+            try:
+                for port in result['udp']:
+                    try:
+                        print('-' * 17 + 'UDP服务器详细信息' + '[' + str(idno) + ']' + '-' * 17)
+                        idno += 1
+                        print('UDP端口号：' + str(port))
+                        try:
+                            print('状态：' + result['udp'][port]['state'])
+                        except:
+                            pass
+                        try:
+                            print('原因：' + result['udp'][port]['reason'])
+                        except:
+                            pass
+                        try:
+                            print('额外信息：' + result['udp'][port]['extrainfo'])
+                        except:
+                            pass
+                        try:
+                            print('名字：' + result['udp'][port]['name'])
+                        except:
+                            pass
+                        try:
+                            print('版本：' + result['udp'][port]['version'])
+                        except:
+                            pass
+                        try:
+                            print('产品：' + result['udp'][port]['product'])
+                        except:
+                            pass
+                        try:
+                            print('CPE：' + result['udp'][port]['cpe'])
+                        except:
+                            pass
+                        try:
+                            print('脚本：' + result['udp'][port]['script'])
+                        except:
+                            pass
+                    except:
+                        pass
+            except:
+                pass
 if __name__ == '__main__':
-
-nmap_A_scan(sys.argv[1])
+    nmap_A_scan(sys.argv[1])
 ```
 
 输出：
@@ -391,7 +292,7 @@ C:\Users> python .\nmap_A_scan.py 192.168.0.103
 
 3、安装好nmap后，需要在import nmap处按住Ctrl，点击进入nmap，添加安装路径
 
-```
-*def* __init__(*self*, *nmap_search_path*=('nmap', '/usr/bin/nmap', '/usr/local/bin/nmap', '/sw/bin/nmap', '/opt/local/bin/nmap', *r*'D:\Nmap\nmap.exe')):
+```python
+def __init__(self, nmap_search_path=('nmap', '/usr/bin/nmap', '/usr/local/bin/nmap', '/sw/bin/nmap', '/opt/local/bin/nmap', r'D:\Nmap\nmap.exe')):
 ```
 
