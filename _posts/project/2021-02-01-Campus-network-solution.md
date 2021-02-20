@@ -9,21 +9,22 @@ image: /assets/img/Campus-network-solution/cover.png
 
 
 
-
 ##  前言
 
-```
-	我曾经手过一个园区网大规模突发丢包事故，进行排查后发现，该园区近期添加了一套视频系统，该系统直接接入现有园区网络，但现有网络因架构和设备性能问题无法承受这另外的视频流量，后续我建议对原网络架构进行升级，替换高性能设备，并对架构重新整改。
-```
+​	我曾经手过一个园区网大规模突发丢包事故，进行排查后发现，该园区近期添加了一套视频系统，该系统直接接入现有园区网络，但现有网络因架构和设备性能问题无法承受这另外的视频流量，后续我建议对原网络架构进行升级，替换高性能设备，并对架构重新整改。
+
+
 
 ## 解决方案
-		为了不对现有网络造成太大影响，因为毕竟园区还在经营的，以尽快解决问题为目的，我对原网络进行三层化，三层采用高端多业务路由交换机（H3C S7500系列），将视频服务器接入三层，由核心交换机进行数据转发，二层采用汇聚交换机进行区域划分，再按区域接入。
+
+​	为了不对现有网络造成太大影响，因为毕竟园区还在经营的，以尽快解决问题为目的，我对原网络进行三层化，三层采用高端多业务路由交换机（H3C S7500系列），将视频服务器接入三层，由核心交换机进行数据转发，二层采用汇聚交换机进行区域划分，再按区域接入。
+
+​	
 
 ## 知识要领
 
-```
 网络中常用的数据传输速率单位有：kbps、Mbps和Gbps。其中：
-1kbps＝1000bps 1Mbps＝1000000bps 1Gbps＝1000000000bps  
+1kbps＝1000bps 1Mbps＝1000000bps 1Gbps＝1000000000bps  
 所以，文件大小与网络速率的换算单位是这样的：
 512K＝512000bps，2M=2000000bps
 同理mpps（million packet per second），百万包/秒，指包转发率（也就是端口吞吐量），是路由器/防火墙/交换机等设备的重要性能指标。
@@ -40,33 +41,35 @@ rfc2544也建议以下包长做为测试的标准， 64、128、256、512、1024
 8127 X 1518 X 8 = 98694288bps
 所以以单向100Mbps为例，当包长为1518字节时，最大包转发送<8127
 
-那我们该如何选择交换机呢？
+### 那我们该如何选择交换机呢？
 衡量标准一:交换容量(L2交换)
 交换容量≥2*(端口数量*端口容量),才可以实现全双工无堵塞交换
 衡量标准二:包转发率(L3包转发)
 包转发率≥满配置吞吐量(Mbps)=满配置千兆端口数*1.488Mpps
 说明:当以太网帧为64byte时,需考虑8byte的帧头和12byte的帧间隙的固定开销
 计算公式:
-  千兆以太网1000Mpps/(64+8+12)/8=1.488Mpps
-  对于万兆以太网,一个线速端口的包转发率为14.88Mpps
+  千兆以太网1000Mpps/(64+8+12)/8=1.488Mpps
+  对于万兆以太网,一个线速端口的包转发率为14.88Mpps
 以华为S5700-52C-EI型号计算:
-官网介绍规格:交换容量256Gbps   包转发率  138Mpps ,
-端口数: 48个千兆     4个万兆
+官网介绍规格:交换容量256Gbps   包转发率  138Mpps ,
+端口数: 48个千兆     4个万兆
 计算公式:
 256Gbps> 2*(48*1GE+4*10GE) =176Gbps,实现全双工无堵塞交换
 138Mpps> 1.488Mpps*48+14.88Mpps*4 =130.944Mpps,实现满配置吞吐量
 
 注：测试工具可采用工业标准测试工具smartbits。
 
-	IRF（Intelligent Resilient Framework，智能弹性架构）是 H3C 自主研发的软件虚拟化技术，它的 核心思想是将多台设备通过物理 IRF 端口连接在一起，进行必要的配置后，虚拟化成一台“虚拟 设备”，通过该“虚拟设备”来实现多台设备的协同工作、统一管理和不间断维护。
- 	IRF分裂带来的问题
-	IRF是指由多台设备通过IRF链路互相连接形成的一台虚拟设备，这台虚拟设备在网络中以一台独立设备的形态和其他设备进行通信。组建IRF的各台设备称为成员设备。
+​	IRF（Intelligent Resilient Framework，智能弹性架构）是 H3C 自主研发的软件虚拟化技术，它的 核心思想是将多台设备通过物理 IRF 端口连接在一起，进行必要的配置后，虚拟化成一台“虚拟 设备”，通过该“虚拟设备”来实现多台设备的协同工作、统一管理和不间断维护。
+
+### IRF分裂带来的问题
+IRF是指由多台设备通过IRF链路互相连接形成的一台虚拟设备，这台虚拟设备在网络中以一台独立设备的形态和其他设备进行通信。组建IRF的各台设备称为成员设备。
+
 在IRF正常运行时，所有成员设备均使用相同的配置（包括IP地址、路由协议等所有功能配置）；当IRF链路出现故障时，会使IRF发生分裂，产生两个或多个新的IRF。此时，这些IRF各自的成员设备仍然运行着分裂前的配置，造成网络中存在多台IP地址以及其他三层配置相同的设备，会对网络中其他设备的协议运算和数据转发产生干扰，影响网络正常运行甚至导致数据丢失。
 
 MAD（Multi-Active Detection，多Active检测）能够检测IRF的拓扑状态，并在IRF分裂后采取一定的安全措施保障网络正常运行，是IRF环境中推荐使用的维护类功能。目前MAD的实现方式有三种：
-1、   LACP MAD
-2、   BFD MAD
-3、   ARP MAD
+1、   LACP MAD
+2、   BFD MAD
+3、   ARP MAD
 MAD的主要功能是及时检测出IRF发生分裂，并在分裂后的多个IRF之间发起竞选。MAD的竞选条件是Master设备的成员编号（也称为IRF的ActiveID），ActiveID较小的IRF获胜，保持正常工作状态（置于Active状态），其余IRF则通过关闭所有接口（除IRF物理端口和Console口）的方式与网络进行隔离（置于Recovery状态），以避免其它设备感知到网络中存在多个IRF。
 
 对于分布式设备开启irf模式的，还需要用xbar命令用来配置主用主控板和备用主控板的负载模式。
@@ -76,12 +79,10 @@ ip ttl-expires enable命令  用来开启设备的ICMP超时报文的发送功�
 （使用Tracert 功能需要在中间设备上开启ICMP 超时报文发送功能，在目的端开启ICMP 目的不可达报文发送功能）
 
 lldp global enable命令用来全局使能LLDP功能，开启该功能，后续网络故障排查可使用lldp。
-```
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/1.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/1.jpg)
 
-```
-一、MSTP 出现的背景:
+### 一、MSTP 出现的背景:
 RSTP 在 STP 基础上进行了改进，实现了网络拓扑快速收敛。但 RSTP 和 STP 还存在同一个缺陷：由于局域网内所有的 VLAN 共享一棵生成树，因此无法在 VLAN 间实现数据流量的负载均衡，链路被阻塞后将不承载任何流量，造成带宽浪费，还有可能造成部分 VLAN 的报文无法转发。
 
 为了弥补 STP 和 RSTP 的缺陷， IEEE 于 2002 年发布的 802.1S 标准定义了 MSTP。 MSTP 兼容 STP和 RSTP，既可以快速收敛，又提供了数据转发的多个冗余路径，在数据转发过程中实现 VLAN 数据的负载均衡。
@@ -93,14 +94,12 @@ RSTP 在 STP 基础上进行了改进，实现了网络拓扑快速收敛。但 
 
 MSTP 通过设置 VLAN 映射表（即 VLAN 和 MSTI 的对应关系表），把 VLAN 和MSTI 联系起来。每个 VLAN 只能对应一个 MSTI，即同一 VLAN 的数据只能在一个 MSTI 中传输，而一个 MSTI 可能对应多个 VLAN。
 
-二、MSTP 基本概念
+### 二、MSTP 基本概念
 1、MSTP 的网络层次
 如图所示， MSTP 网络中包含 1 个或多个 MST 域（MST Region），每个 MST Region 中包含一个或多个 MSTI。组成 MSTI 的是运行 STP/RSTP/MSTP 的交换设备， MSTI 是所有运行STP/RSTP/MSTP 的交换设备经 MSTP 协议计算后形成的树状网络。
-```
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/2.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/2.jpg)
 
-```
 2、MST 域（MST Region）
 MST 域是多生成树域（Multiple Spanning Tree Region），由交换网络中的多台交换设备以及它们之间的网段所构成。同一个 MST 域的设备具有下列特点：
 都启动了 MSTP。
@@ -110,11 +109,9 @@ MST 域是多生成树域（Multiple Spanning Tree Region），由交换网络�
 一个局域网可以存在多个 MST 域，各 MST 域之间在物理上直接或间接相连。用户可以通过 MSTP配置命令把多台交换设备划分在同一个 MST 域内。
 
 如图所示的 MST Region D0 中由交换设备 S1、 S2、 S3 和 S4 构成，域中有 3 个 MSTI。
-```
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/3.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/3.jpg)
 
-```
 3、VLAN 映射表
 VLAN 映射表是 MST 域的属性，它描述了 VLAN 和 MSTI 之间的映射关系。
 如上图所示， MST 域 D0 的 VLAN 映射表是：
@@ -126,11 +123,9 @@ VLAN2 和 VLAN3 映射到 MSTI2
 域根（Regional Root）分为 IST（Internal Spanning Tree）域根和 MSTI 域根。
 IST 生成树中距离总根（CIST Root）最近的交换设备是 IST 域根。
 一个 MST 域内可以生成多棵生成树，每棵生成树都称为一个 MSTI。 MSTI 域根是每个多生成树实例的树根。如图所示，域中不同的 MSTI 有各自的域根
-```
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/4.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/4.jpg)
 
-```
 MSTI 之间彼此独立， MSTI 可以与一个或者多个 VLAN 对应。 但一个 VLAN 只能与一个 MSTI 对应。
 
 5、主桥
@@ -139,11 +134,9 @@ MSTI 之间彼此独立， MSTI 可以与一个或者多个 VLAN 对应。 但�
 
 6、总根
 总根是 CIST（Common and Internal Spanning Tree）的根桥，如下图总根是区域 A0 中的某台设备。
-```
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/5.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/5.jpg)
 
-```
 7、CST
 公共生成树 CST（Common Spanning Tree）是连接交换网络内所有 MST 域的一棵生成树。
 如果把每个 MST 域看作是一个节点， CST 就是这些节点通过 STP 或 RSTP 协议计算生成的一棵生成树。
@@ -193,32 +186,26 @@ Master端口
 同一端口在不同的生成树实例中可以担任不同的角色。
 
 MSTP 的端口状态
-```
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/6.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/6.jpg)
 
-```
-三、MSTP 报文
+### 三、MSTP 报文
 MSTP 使用多生成树桥协议数据单元 MST BPDU（Multiple Spanning Tree Bridge Protocol Data Unit）作为生成树计算的依据。 MST BPDU 报文用来计算生成树的拓扑、维护网络拓扑以及传达拓扑变化记录。
 STP 中定义的配置 BPDU、 RSTP 中定义的 RST BPDU、 MSTP 中定义的 MST BPDU 及 TCN BPDU差异对比如表所示。
-```
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/7.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/7.jpg)
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/8.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/8.jpg)
 
-```
 无论是域内的 MST BPDU 还是域间的，前 36 个字节和 RST BPDU 相同。
 从第 37 个字节开始是 MSTP 专有字段。最后的 MSTI 配置信息字段由若干 MSTI 配置信息组连缀而成。
-```
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/9.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/9.jpg)
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/10.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/10.jpg)
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/11.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/11.jpg)
 
-```
 MSTP 报文格式可配置：
 目前 MSTP 的 BPDU 报文存在两种格式：
 dot1s： IEEE802.1s 规定的报文格式。
@@ -234,7 +221,7 @@ Hello Time 用于生成树协议定时发送配置消息维护生成树的稳定
 当交换设备成为根交换设备时，该交换设备会按照该设置值为时间间隔发送 BPDU 报文。非根交换设备采用根交换设备所设置的 Hello Time 时间值。
 华为数据通信设备提供的每个 Hello Time 时间内端口最多能够发送的 BPDU 报文个数可配置（Max Transmitted BPDU Number in Hello Time is Configurable）功能，可以设定当前端口在 Hello Time 时间内配置 BPDU 的最大发送数目。用户配置的数值越大，表示每 Hello Time 时间内发送的报文数越多。适当的设置该值可以限制端口每 Hello Time 时间内能发送的 BPDU 数目，防止在网络拓扑动荡时， BPDU 占用过多的带宽资源
 
-四、MSTP 拓扑计算
+### 四、MSTP 拓扑计算
 
 1、MSTP 的基本原理
 MSTP 将整个二层网络划分为多个 MST 域，各个域之间通过计算生成 CST。域内则通过计算生成多棵生成树，每棵生成树都被称为是一个多生成树实例。其中实例 0 被称为 IST，其他的多生成树实例为 MSTI。 MSTP 同 STP 一样，使用配置消息进行生成树的计算，只是配置消息中携带的是设备上 MSTP 的配置信息。
@@ -246,11 +233,9 @@ MSTI 和 CIST 都是根据优先级向量来计算的，这些优先级向量信
 参与 MSTI 计算的优先级向量为：
 { 域根 ID，内部路径开销，指定交换设备 ID，指定端口 ID，接收端口 ID }
 括号中的向量的优先级从左到右依次递减。
-```
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/12.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/12.jpg)
 
-```
 比较原则
 同一向量比较，值最小的向量具有最高优先级。
 优先级向量比较原则如下。
@@ -284,23 +269,22 @@ MSTI 的特点：
 5、MSTP 对拓扑变化的处理
 MSTP 拓扑变化处理与 RSTP 拓扑变化处理过程类似，请参见 RSTP 技术细节中的 RSTP 拓扑变化处理。
 
-五、MSTP 快速收敛机制
+### 五、MSTP 快速收敛机制
 MSTP 支持普通方式和增强方式两种 P/A（Proposal/Agreement）机制：
 普通方式
 MSTP 支持普通方式的 P/A 机制实现与 RSTP 支持的 P/A 机制实现相同
 增强方式
-```
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/13.jpg)
+![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/13.jpg)
 
-```
 如图所示，在 MSTP 中， P/A 机制工作过程如下：
 1. 上游设备发送 Proposal 报文，请求进行快速迁移。下游设备接收到后，把与上游设备相连的端口设置为根端口，并阻塞所有非边缘端口。
 2. 上游设备继续发送 Agreement 报文。下游设备接收到后，根端口转为 Forwarding 状态。
 3. 下游设备回应 Agreement 报文。上游设备接收到后，把与下游设备相连的端口设置为指定端口，指定端口进入 Forwarding 状态。
 
 缺省情况下，华为数据通信设备使用增强的快速迁移机制。如果华为数据通信设备和其他制造商的设备进行互通，而其他制造商的设备 P/A 机制使用普通的快速迁移机制，此时，可在华为数据通信设备上通过设置 P/A 机制为普通的快速迁移机制，从而实现华为数据通信设备和其他制造商的设备进行互通。
-转载链接：https://zhuanlan.zhihu.com/p/118661705
+
+[转载链接] : https://zhuanlan.zhihu.com/p/118661705
 
 SNMP是广泛应用于TCP/IP网络的一种网络管理协议。SNMP提供了一 种通过运行网络管理软件NMS（Network Management System）的网 络管理工作站来管理网络设备的方法。 SNMP支持以下几种操作： 1. NMS通过SNMP协议给网络设备发送配置信息。 2. NMS通过SNMP来查询和获取网络中的资源信息。 3. 网络设备主动向NMS上报告警消息，使得网络管理员能够及时处理 各种网络问题。
 
@@ -313,5 +297,4 @@ C0 A8 01 01：AC地址的十六进制字符；
 
 （续）
 
-```
 
