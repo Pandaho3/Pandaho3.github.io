@@ -4,6 +4,7 @@ author: Pandaho
 date: 2020-04-25 19:00:00 +0000
 categories: [life] 
 tags: [blog]
+pin: true
 toc: true
 image: /assets/img/Blog Set Sail/cover.png
 ---
