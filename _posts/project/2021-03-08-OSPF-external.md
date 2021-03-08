@@ -40,10 +40,10 @@ interface GigabitEthernet2/0/0
 ospf 1 router-id 2.2.2.2 
  import-route static
  area 0.0.0.0 
-  authentication-mode md5 1 cipher %$%$Z!)q3w[bgU1Z5P+1$1304`Y6%$%$
+  authentication-mode md5 1 cipher huawei
   network 10.1.1.2 0.0.0.0 
  area 0.0.0.2 
-  authentication-mode md5 1 cipher %$%$;JE>Z&}7DMHM:0C>{%Q+4`;&%$%$
+  authentication-mode md5 1 cipher huawei
   network 10.1.3.1 0.0.0.0 
 #
 ip route-static 192.168.1.0 255.255.255.0 10.1.6.2
@@ -60,7 +60,7 @@ interface GigabitEthernet0/0/1
 ospf 1 router-id 3.3.3.3 
  silent-interface GigabitEthernet0/0/0
  area 0.0.0.2 
-  authentication-mode md5 1 cipher %$%$&(yOB{lq}"Ipw[@`'3X%4`X]%$%$
+  authentication-mode md5 1 cipher huawei
   network 10.1.3.2 0.0.0.0 
   network 10.1.4.1 0.0.0.0
 ```
@@ -76,10 +76,10 @@ interface GigabitEthernet0/0/1
 #
 ospf 1 router-id 4.4.4.4 
  area 0.0.0.0 
-  authentication-mode md5 1 cipher %$%$Zn2#6pLg4-]oK%M~meTO4]Ue%$%$
+  authentication-mode md5 1 cipher huawei
   network 10.1.1.1 0.0.0.0 
  area 0.0.0.1 
-  authentication-mode md5 1 cipher %$%$,0Q8M8Y:.7E>J]DqEzrM4^,<%$%$
+  authentication-mode md5 1 cipher huawei
   network 10.1.2.2 0.0.0.0 
 ```
 
@@ -95,7 +95,7 @@ interface GigabitEthernet0/0/1
 ospf 1 router-id 5.5.5.5 
  silent-interface GigabitEthernet0/0/1
  area 0.0.0.1 
-  authentication-mode md5 1 cipher %$%$c/w5Y^_;-Q^ma<XD):E74]%)%$%$
+  authentication-mode md5 1 cipher huawei
   network 10.1.2.1 0.0.0.0 
   network 10.1.5.254 0.0.0.0 
 ```
@@ -106,7 +106,7 @@ ospf 1 router-id 5.5.5.5
 
 可以在不同的OSPF进程中，禁止同一个接口发送和接收OSPF报文，但**silent-interface**命令只对本进程已经使能的OSPF接口起作用，对其它进程的接口不起作用。
 
----------------------------------------------------------------------------------------------------------------------------------+
+-----------------------------------------------------------------------------------------------------------------------------------
 
 DR和BDR是由同一网段中所有的路由器根据路由器优先级、Router ID通过HELLO报文选举出来的，只有优先级大于0的路由器才具有选取资格。
 
@@ -122,7 +122,7 @@ DR和BDR是由同一网段中所有的路由器根据路由器优先级、Router
 
 DR并不一定就是路由器优先级最高的路由器接口；同理，BDR也并不一定就是路由器优先级次高的路由器接口。
 
----------------------------------------------------------------------------------------------------------------------------------+
+-----------------------------------------------------------------------------------------------------------------------------------
 
 OSPF支持报文验证功能，只有通过验证的报文才能接收，否则将不能正常建立邻居关系。
 
@@ -133,7 +133,7 @@ OSPF协议支持两种认证方式：区域认证和链路认证。
 
 简单验证模式在数据传递过程中，认证密钥和密钥ID都是明文传输，容易被截获；MD5验证下的密钥是经过MD5加密传输，相比简单模式更为安全；Key chain 验证模式可以同时配置多个密钥，不同密钥单独设置生效周期等。
 
----------------------------------------------------------------------------------------------------------------------------------+
+-----------------------------------------------------------------------------------------------------------------------------------
 
 ```
 OSPF Process 1 with Router ID 2.2.2.2
