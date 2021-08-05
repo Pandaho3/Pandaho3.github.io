@@ -27,7 +27,7 @@ image: /assets/img/Blog Set Sail/cover.png
 
 这个项目我是在GitHub上了解的，[项目网址](https://github.com/cotes2020/jekyll-theme-chirpy) （因为墙的原因Github下载会慢些，可以去码云下载。)
 
-我想象中的博客是以简易实用为主。博客的搭建就是利用GitHub Pages功能了，大家也可以去了解下GitHub Pages + Jekyll 搭起来还是很容易的，这方案算是对新手很友好了，用GitHub Pages还有一个原因就是域名和空间都是免费的，不用自己再去搞台主机，就是国内访问起来慢了些，可以自己买个国内域，解析下。
+我想象中的博客是以简易实用为主。博客的搭建就是利用[GitHub Pages](https://pages.github.com/) 功能了，大家也可以去了解下[GitHub Pages + Jekyll](https://guides.github.com/features/pages/) 搭起来还是很容易的，这方案算是对新手很友好了，用GitHub Pages还有一个原因就是域名和空间都是免费的，不用自己再去搞台主机，就是国内访问起来慢了些，可以自己买个国内域，解析下。
 而关于代码，其实我对于前端也不是很懂，因为这个博客是基于jekyll搭建的，可以通过了解[jekyll](https://www.jekyll.com.cn/)  ，对于你搭建博客更顺手些。
 
 ### 我说下我个人总结的理解
@@ -63,6 +63,10 @@ gem 'tzinfo-data'在Windows上进行开发时是必需的（通常Gemfile在Wind
 5、上传github后，我发现无法访问，先ping解析后发现ip地址为127.0.0.1   
 在C:\Windows\System32\drivers\etc 下修改hosts   
 添加博客解析地址，推荐[站长工具](http://tool.chinaz.com/dns/?type=1&host=leopardpan.github.io&ip=)进行dns解析  查询博客地址就行。
+
+6、错误描述：运行jekyll serve提示“cannot load such file -- webrick (LoadError)”  
+解决：gem install webrick，然后在Gemfile里加入gem 'webrick'；
+Gemfile是我们创建的一个用于描述gem之间依赖的文件。gem是一堆Ruby代码的集合，它能够为我们提供调用。
 
 全部安装完毕后就可以启动服务器：jekyl serve
 （原理是jekyll在本地启动一个webrick的http服务器，然后浏览器访问：localhost:4000）
