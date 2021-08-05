@@ -3,7 +3,7 @@
 # Initial the Categories/Tags pages and Lastmod for posts and then push to remote
 #
 # v2.0
-# https://github.com/cotes2020/jekyll-theme-chirpy
+# https://github.com/Pandaho3/Pandaho3.github.io
 # © 2019 Cotes Chung
 # Published under MIT License
 

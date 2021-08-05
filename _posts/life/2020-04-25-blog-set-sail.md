@@ -25,7 +25,7 @@ image: /assets/img/Blog Set Sail/cover.png
 
 接下来说下搭建这个博客的技术和原理吧！我喜欢做啥都先把原理理解一遍，才上手，古语道，君子不立危墙下。
 
-这个项目我是在GitHub上了解的，[项目网址](https://github.com/cotes2020/jekyll-theme-chirpy) （因为墙的原因Github下载会慢些，可以去码云下载。)
+这个项目我是在GitHub上了解的，[项目网址](https://github.com/Pandaho3/Pandaho3.github.io) （因为墙的原因Github下载会慢些，可以去码云下载。)
 
 我想象中的博客是以简易实用为主。博客的搭建就是利用[GitHub Pages](https://pages.github.com/) 功能了，大家也可以去了解下[GitHub Pages + Jekyll](https://guides.github.com/features/pages/) 搭起来还是很容易的，这方案算是对新手很友好了，用GitHub Pages还有一个原因就是域名和空间都是免费的，不用自己再去搞台主机，就是国内访问起来慢了些，可以自己买个国内域，解析下。
 而关于代码，其实我对于前端也不是很懂，因为这个博客是基于jekyll搭建的，可以通过了解[jekyll](https://www.jekyll.com.cn/)  ，对于你搭建博客更顺手些。

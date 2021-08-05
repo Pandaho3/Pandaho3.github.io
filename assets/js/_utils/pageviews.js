@@ -6,7 +6,7 @@
  *   - countUp.js <https://github.com/inorganik/countUp.js>
  *
  * v2.0
- * https://github.com/cotes2020/jekyll-theme-chirpy
+ * https://github.com/Pandaho3/Pandaho3.github.io
  * © 2018-2019 Cotes Chung
  * MIT License
  */
