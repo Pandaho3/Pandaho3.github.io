@@ -14,7 +14,7 @@ image: /assets/img/OSPF-external/cover.png
 公司A分3个区域运行OSPF，公司B有一台业务服务器，将公司A与公司B连通，使公司A的PC能够访问到公司B的服务器。
 
 ## 网络架构
-![图例](https://www.pandaho3.cn/assets/img/OSPF-external/1.png)
+![图例](/assets/img/OSPF-external/1.png)
 
 ## 设备配置
 
