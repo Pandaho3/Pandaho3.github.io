@@ -4,7 +4,7 @@ author: Pandaho
 date: 2021-06-10 20:00:00 
 categories: [Project] 
 tags: [python]
-image: /assets/python-data-analysis/cover.png
+image: /assets/img/python-data-analysis/cover.png
 ---
 
 
