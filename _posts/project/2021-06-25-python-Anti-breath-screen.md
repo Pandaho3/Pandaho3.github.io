@@ -74,10 +74,7 @@ while True:
 
 ## 参考来源
 
-[pyautogui](https://www.jb51.net/article/183926.htm)
-
-[keyboard](https://www.cnblogs.com/xia-weiwen/p/13512463.html)
-
-[pyinstaller](https://blog.csdn.net/one312/article/details/105736261)
-
+[pyautogui](https://www.jb51.net/article/183926.htm)  
+[keyboard](https://www.cnblogs.com/xia-weiwen/p/13512463.html)  
+[pyinstaller](https://blog.csdn.net/one312/article/details/105736261)  
 [file](https://www.jb51.net/article/194450.htm)

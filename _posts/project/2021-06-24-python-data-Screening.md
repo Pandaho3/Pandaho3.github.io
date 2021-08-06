@@ -131,12 +131,8 @@ if __name__ == '__main__':
 
 ## 参考来源
 
-[H3C-DHCP配置手册](http://www.h3c.com/cn/d_201711/1043768_30005_0.htm#_Toc494387077)
-
-[xlrd模块详解](https://www.cnblogs.com/lnd-blog/p/12535423.html)
-
-[python之xlwt模块列宽width、行高Heights详解](https://www.cnblogs.com/landhu/p/4978705.html)
-
-[Python xlwt颜色代码](https://www.jianshu.com/p/0dd8cc68a3c3)
-
+[H3C-DHCP配置手册](http://www.h3c.com/cn/d_201711/1043768_30005_0.htm#_Toc494387077)  
+[xlrd模块详解](https://www.cnblogs.com/lnd-blog/p/12535423.html)  
+[python之xlwt模块列宽width、行高Heights详解](https://www.cnblogs.com/landhu/p/4978705.html)  
+[Python xlwt颜色代码](https://www.jianshu.com/p/0dd8cc68a3c3)  
 [Xlwt-样式详解](https://www.cnblogs.com/zq-zq/p/13974794.html)
