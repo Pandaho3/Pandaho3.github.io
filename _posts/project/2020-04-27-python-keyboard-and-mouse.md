@@ -20,7 +20,7 @@ image: /assets/img/python-keyboard-and-mouse/cover.png
 
 ### 架构图
 
-![图例](https://www.pandaho3.cn/assets/img/python-keyboard-and-mouse/1.png)
+![图例](/assets/img/python-keyboard-and-mouse/1.png)
 
 
 ### Python模块

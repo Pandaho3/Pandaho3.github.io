@@ -21,7 +21,7 @@ image: /assets/img/wireless-network/cover.png
 
 AP覆盖的有效范围取决于AP和终端之间的链路预算。链路预算计算公式如下：终端接收信号强度＝AP发射功率＋AP发射天线增益－空间传输距离衰减－障碍物损耗＋终端接收天线增益。其中，空间距离对信号的衰减如下：
 
-![图例](https://www.pandaho3.cn/assets/img/wireless-network/1.png)
+![图例](/assets/img/wireless-network/1.png)
 为满足移动办公场景下BYOD不同类型终端（便携笔记本、智能手机、PAD、哑终端等）的接入体验，终端信号强度及AP覆盖半径建议值如下：
 	• 重点覆盖区域终端接收信号电平应大于－65dBm；
 	• 普通覆盖区域终端接收信号电平应大于－75dBm；

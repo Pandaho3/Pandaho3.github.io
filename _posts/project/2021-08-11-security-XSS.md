@@ -44,7 +44,7 @@ XSS跨站脚本攻击(Cross Site Scripting)攻击者往web页面里插入恶意s
 
 执行后，该代码将永久插入前端中，后续用户每次点击该页面，该代码都会被执行，这便是存储型xss。
 
-HTML <script> 标签
+HTML ```<script> ``` 标签
 
 定义和用法
 
@@ -64,7 +64,7 @@ alert()可以用来简单而明了地将括号内的文本信息显示在对话�
 
 `http://192.168.80.128/vulnerabilities/xss_r/?name=<script>alert(test)</script>`
 
-将代码再进行[短链接转换](https://www.ft12.com) 后发给用户，用户只要访问url就会受到xss反射型攻击。
+将代码再进行[短链接转换](https://www.ft12.com)后发给用户，用户只要访问url就会受到xss反射型攻击。
 
  反射型xss：非持久化xss，需要欺骗用户自己去点击链接才能触发xss代码（服务器中没有这样的页面和内容），一般容易出现在搜索页面。
 

@@ -22,6 +22,6 @@ ICMP	ICMP[1]		AppControl		DROPFLAG_appcontrol		应用服务控制丢包
 
 进入日志中心查看-所有日志-选择当天拒绝行为
 
-![图例](https://www.pandaho3.cn/assets/img/sangfor-appcontrol/1.png)  
+![图例](/assets/img/sangfor-appcontrol/1.png)  
 发现该ip被默认策略录入拒绝组。  
 进入该组删除核心交换机ip记录，添加至高权限组

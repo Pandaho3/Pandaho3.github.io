@@ -23,7 +23,7 @@ image: /assets/img/Hotel-network/cover.png
 
 ### 知识要领
 路由策略与策略路由
-![图例](https://www.pandaho3.cn/assets/img/Hotel-network/1.png)
+![图例](/assets/img/Hotel-network/1.png)
 NQA是一种实时的网络性能探测和统计技术，可以对响应时间、网络抖动、丢包率等网络信息进行统计。
 NQA还提供了与Track和应用模块联动的功能，实时监控网络状态的变化。
 ICMP-echo功能是NQA最基本的功能，遵循RFC 2925来实现，其实现原理是通过发送ICMP报文来判断目的地的可达性、计算网络响应时间及丢包率。

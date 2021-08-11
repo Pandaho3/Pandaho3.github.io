@@ -80,7 +80,7 @@ ip ttl-expires enable命令  用来开启设备的ICMP超时报文的发送功�
 
 lldp global enable命令用来全局使能LLDP功能，开启该功能，后续网络故障排查可使用lldp。
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/1.jpg)
+![图例](/assets/img/Campus-network-solution/1.jpg)
 
 ### 一、MSTP 出现的背景:
 RSTP 在 STP 基础上进行了改进，实现了网络拓扑快速收敛。但 RSTP 和 STP 还存在同一个缺陷：由于局域网内所有的 VLAN 共享一棵生成树，因此无法在 VLAN 间实现数据流量的负载均衡，链路被阻塞后将不承载任何流量，造成带宽浪费，还有可能造成部分 VLAN 的报文无法转发。
@@ -98,7 +98,7 @@ MSTP 通过设置 VLAN 映射表（即 VLAN 和 MSTI 的对应关系表），把
 1、MSTP 的网络层次
 如图所示， MSTP 网络中包含 1 个或多个 MST 域（MST Region），每个 MST Region 中包含一个或多个 MSTI。组成 MSTI 的是运行 STP/RSTP/MSTP 的交换设备， MSTI 是所有运行STP/RSTP/MSTP 的交换设备经 MSTP 协议计算后形成的树状网络。
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/2.jpg)
+![图例](/assets/img/Campus-network-solution/2.jpg)
 
 2、MST 域（MST Region）
 MST 域是多生成树域（Multiple Spanning Tree Region），由交换网络中的多台交换设备以及它们之间的网段所构成。同一个 MST 域的设备具有下列特点：
@@ -110,7 +110,7 @@ MST 域是多生成树域（Multiple Spanning Tree Region），由交换网络�
 
 如图所示的 MST Region D0 中由交换设备 S1、 S2、 S3 和 S4 构成，域中有 3 个 MSTI。
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/3.jpg)
+![图例](/assets/img/Campus-network-solution/3.jpg)
 
 3、VLAN 映射表
 VLAN 映射表是 MST 域的属性，它描述了 VLAN 和 MSTI 之间的映射关系。
@@ -124,7 +124,7 @@ VLAN2 和 VLAN3 映射到 MSTI2
 IST 生成树中距离总根（CIST Root）最近的交换设备是 IST 域根。
 一个 MST 域内可以生成多棵生成树，每棵生成树都称为一个 MSTI。 MSTI 域根是每个多生成树实例的树根。如图所示，域中不同的 MSTI 有各自的域根
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/4.jpg)
+![图例](/assets/img/Campus-network-solution/4.jpg)
 
 MSTI 之间彼此独立， MSTI 可以与一个或者多个 VLAN 对应。 但一个 VLAN 只能与一个 MSTI 对应。
 
@@ -135,7 +135,7 @@ MSTI 之间彼此独立， MSTI 可以与一个或者多个 VLAN 对应。 但�
 6、总根
 总根是 CIST（Common and Internal Spanning Tree）的根桥，如下图总根是区域 A0 中的某台设备。
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/5.jpg)
+![图例](/assets/img/Campus-network-solution/5.jpg)
 
 7、CST
 公共生成树 CST（Common Spanning Tree）是连接交换网络内所有 MST 域的一棵生成树。
@@ -187,24 +187,24 @@ Master端口
 
 MSTP 的端口状态
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/6.jpg)
+![图例](/assets/img/Campus-network-solution/6.jpg)
 
 ### 三、MSTP 报文
 MSTP 使用多生成树桥协议数据单元 MST BPDU（Multiple Spanning Tree Bridge Protocol Data Unit）作为生成树计算的依据。 MST BPDU 报文用来计算生成树的拓扑、维护网络拓扑以及传达拓扑变化记录。
 STP 中定义的配置 BPDU、 RSTP 中定义的 RST BPDU、 MSTP 中定义的 MST BPDU 及 TCN BPDU差异对比如表所示。
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/7.jpg)
+![图例](/assets/img/Campus-network-solution/7.jpg)
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/8.jpg)
+![图例](/assets/img/Campus-network-solution/8.jpg)
 
 无论是域内的 MST BPDU 还是域间的，前 36 个字节和 RST BPDU 相同。
 从第 37 个字节开始是 MSTP 专有字段。最后的 MSTI 配置信息字段由若干 MSTI 配置信息组连缀而成。
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/9.jpg)
+![图例](/assets/img/Campus-network-solution/9.jpg)
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/10.jpg)
+![图例](/assets/img/Campus-network-solution/10.jpg)
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/11.jpg)
+![图例](/assets/img/Campus-network-solution/11.jpg)
 
 MSTP 报文格式可配置：
 目前 MSTP 的 BPDU 报文存在两种格式：
@@ -234,7 +234,7 @@ MSTI 和 CIST 都是根据优先级向量来计算的，这些优先级向量信
 { 域根 ID，内部路径开销，指定交换设备 ID，指定端口 ID，接收端口 ID }
 括号中的向量的优先级从左到右依次递减。
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/12.jpg)
+![图例](/assets/img/Campus-network-solution/12.jpg)
 
 比较原则
 同一向量比较，值最小的向量具有最高优先级。
@@ -275,7 +275,7 @@ MSTP 支持普通方式和增强方式两种 P/A（Proposal/Agreement）机制�
 MSTP 支持普通方式的 P/A 机制实现与 RSTP 支持的 P/A 机制实现相同
 增强方式
 
-![图例](https://www.pandaho3.cn/assets/img/Campus-network-solution/13.jpg)
+![图例](/assets/img/Campus-network-solution/13.jpg)
 
 如图所示，在 MSTP 中， P/A 机制工作过程如下：
 1. 上游设备发送 Proposal 报文，请求进行快速迁移。下游设备接收到后，把与上游设备相连的端口设置为根端口，并阻塞所有非边缘端口。

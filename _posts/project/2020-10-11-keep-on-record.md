@@ -30,4 +30,4 @@ image: /assets/img/keep-on-record/cover.png
 公司购买域名后会要求进行域名备案，备案完成后会有备案号，之后专线开通端口后，解析到该域名  
 以华为云为例：  
 在域名栏目，选择你要进行解析的域名，点击解析添加记录集  
-![图例](https://www.pandaho3.cn/assets/img/keep-on-record/1.png)
+![图例](/assets/img/keep-on-record/1.png)

@@ -17,7 +17,7 @@ image: /assets/img/ospf-virtual-link/cover.png
 虚链路（virtual link）是指一条通过一个非骨干区域连接到骨干区域的链路。
 
 ##  项目背景
-![图例](https://www.pandaho3.cn/assets/img/ospf-virtual-link/1.png)  
+![图例](/assets/img/ospf-virtual-link/1.png)  
 在这个网络中，AR1是学不到34.0.0.0网段的ip的，因为area2并没有连接到area0上，所以我们可以在AR2-AR3之间建立一条虚链路，使area2连接到area0。
 
 ##  配置命令

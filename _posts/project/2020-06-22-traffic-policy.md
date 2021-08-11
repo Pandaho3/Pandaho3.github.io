@@ -25,7 +25,7 @@ image: /assets/img/ospf-ip-prefix/cover.png
 3、Traffic Policy：将流分类和流行为关联，应用到流量的入接口。
 
 ##  项目背景
-![图例](https://www.pandaho3.cn/assets/img/traffic-policy/1.png)  
+![图例](/assets/img/traffic-policy/1.png)  
 我们通过client设备访问server设备http服务，在AR1将http流量重定向至GE0/0/0口
 
 ##  配置命令

@@ -46,7 +46,7 @@ image: /assets/img/ospf-ip-prefix/cover.png
 metric-type：OSPF引入 外部路由时，其路由器需要计算到达外部路由的花费。metric-type分为type1和type2，默认为type2。type1，计算的花费值就是到达ASBR的花费+LSA所携带的metric值，即度量值=数据报文所经过的各内部链路成本+被分配的外部路径成本(type2的度量 值)；type2，计算的花费就是LSA所携带的“种子metric”（默认值为20），即度量值=被分配的外部路径成本。所以type1优于type2，推荐使用type1。
 
 ##  项目背景
-![图例](https://www.pandaho3.cn/assets/img/ospf-ip-prefix/1.png)  
+![图例](/assets/img/ospf-ip-prefix/1.png)  
 我们通过静态路由使用ip-Prefix引入ospf
 
 静态路由我们在AR1设置路由黑洞，将两个路由引入null
