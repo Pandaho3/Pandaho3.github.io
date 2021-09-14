@@ -100,7 +100,7 @@ if __name__ == '__main__':
 
 ## 参考源码
 
-百度
-[Beautiful Soup官方详解](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
-[爬虫项目案例](https://blog.csdn.net/viafcccy/article/details/85217934)
+百度  
+[Beautiful Soup官方详解](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)  
+[爬虫项目案例](https://blog.csdn.net/viafcccy/article/details/85217934)  
 
