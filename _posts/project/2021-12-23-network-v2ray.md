@@ -1,5 +1,5 @@
 ---
-title: 记一次vps代理搭建
+title: 记一次v2ray代理搭建
 author: Pandaho
 date: 2021-12-23 20:00:00 
 categories: [Project] 
