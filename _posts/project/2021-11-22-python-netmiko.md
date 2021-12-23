@@ -17,7 +17,7 @@ image: /assets/img/python-netmiko/cover.png
 
 **send_command()：**只支持向设备发送一条命令，通常是show/display之类的查询、排错命令或者wr mem这样保存配置的命令。发出命令后，默认情况下这个函数会一直等待，直到接收到设备的完整回显内容为止（以收到设备提示符为准，比如说要一直等到读取到“#"为止），如果在一定时间内依然没读到完整的回显内容，netmiko则会返回一个**OSError: Search pattern never detected in send_command: xxxxx**的异常。
 
-如果想要指定netmiko从回显内容中读到我们需要的内容，则需要用到expect_string参数（expect_string默认值为None），如果send_command()从回显内容中读到了expect_string参数指定的内容，则send_command()**依然返回完整的回显内容，**如果没读到expect_string参数指定的内容，则netmiko同样**会返回一个OSError: Search pattern never detected in send_command: xxxxx的异常**，关于expect_string参数的用法会在稍后的实验里演示。
+如果想要指定netmiko从回显内容中读到我们需要的内容，则需要用到expect_string参数（expect_string默认值为None），如果send_command()从回显内容中读到了expect_string参数指定的内容，则send_command()**依然返回完整的回显内容，**如果没读到expect_string参数指定的内容，则netmiko同样**会返回一个OSError: Search pattern never detected in send_command: xxxxx的异常**。
 
 ### 正则表达式(regular expression)：
 
@@ -27,7 +27,15 @@ image: /assets/img/python-netmiko/cover.png
 
 compile()与search()搭配使用, 匹配不到会返回None，返回None的时候就没有span/group属性了, 可以不从位置0开始匹配。但是匹配一个单词之后，匹配就会结束。
 
-### 以下是网络设备自动化脚本里的一部分功能：
+## 故障现象
+
+之前收到反馈，交换机console账户密码批量修改脚本运行出错，查看错误日志，发现在发送user-interface aux 0 - 1配置命令时，多了个“-”符号，从而引发错误。
+进行了源码分析，确定该bug现象是由于该发送配置命令的逻辑运算出现了运算错误，该错误是因netmiko模块的send_command函数在进行命令配置后，读取不到完整的回显内容，但却未触发OSError错误告警，继续执行，在后续的正则表达式匹配中，由于回显内容不足，导致运算信息欠缺，从而引起bug。
+
+## 解决方法
+在send_command函数增加指定的内容验证，使其读取到命令执行完毕后，回到用户界面，出现的“>”字符才结束，否则将触发OSError错误告警，保证最终回显信息完整。
+
+## 网络设备自动化脚本里的一部分功能：
 
 ```python
 password = ConfigParser()   
@@ -53,13 +61,11 @@ pattern_mac = re.compile(r'(\w{4}-\w{4}-\w{4})')  #正则表达示匹配MAC
 super_bit = 0  
 threadList = []  
 
-
 def randumPassGen():  
 	new_pass = random.sample(string.ascii_letters + string.digits + '!@#$%^&*()', passLength)
 	fi_pass = ''.join(new_pass)
 	fi_pass = orderpass + fi_pass  
 	return fi_pass
-
 
 def runscript(row):
 	ip = row['ip']
@@ -144,7 +150,7 @@ def runscript(row):
 		except:
 			pass
 ```
-## 
+
 
 ## 参考资料
 

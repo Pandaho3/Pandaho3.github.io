@@ -1,5 +1,5 @@
 ---
-title: I And Poetry
+title: 诗意源于情感，曾经感性饱满的我
 author: Pandaho
 date: 2020-04-25 21:00:00 
 categories: [life] 
