@@ -13,7 +13,7 @@ image: /assets/img/python-netmiko/cover.png
 
 ### Netmiko模块
 
-主要用于与网络设备之间的ssh连接，并提供了世界主流网络设备厂商的适配，使对网络设备的配置工作能够自动化实现。
+主要用于与网络设备之间的ssh连接，并提供了世界主流网络设备厂商的适配，使对网络设备的配置工作能够自动化实现。 
 
 **send_command()：**只支持向设备发送一条命令，通常是show/display之类的查询、排错命令或者wr mem这样保存配置的命令。发出命令后，默认情况下这个函数会一直等待，直到接收到设备的完整回显内容为止（以收到设备提示符为准，比如说要一直等到读取到“#"为止），如果在一定时间内依然没读到完整的回显内容，netmiko则会返回一个**OSError: Search pattern never detected in send_command: xxxxx**的异常。
 
