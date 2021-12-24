@@ -14,7 +14,7 @@ image: /assets/img/network-v2ray/cover.png
 
 ​	最近临近圣诞，国外的VPS又迎来一波折扣，正好之前Vultr买的过期了，这次选了Racknerd，正好有个折扣套餐一年10美元差不多，性能够我代理用了（虽然ip资源少了些，单独购买ip资源，1个ip差不多2美元了），购买方式就不写，官网直接买，有手就行，下面主要讲搭建和原理。
 
-​	[附图几种代理项目](/assets/img/network-v2ray/1.png)
+​	![附图几种代理项目](/assets/img/network-v2ray/1.png)
 
 我选中的是v2ray，因为这个项目比较成熟，相关的工具也比较齐全，稳定性比较好。
 
