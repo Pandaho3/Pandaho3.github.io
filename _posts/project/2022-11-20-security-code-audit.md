@@ -44,17 +44,20 @@ image: /assets/img/security-code-audit/cover.png
 
 ###  **JavaScript审计**
 1、Vue 实例上的箭头方法
+
 Vue 框架以实例作为接收者调用 Vue 实例的方法。然而，箭头函数不可能执行这种实例和接收者的绑定，因此thisVue 实例上的箭头函数中的变量可能没有程序员期望的值。
 
 参考代码：codeql/javascript/ql/src/Vue/ArrowMethodOnVueInstance.ql 
 
 
 2、常量赋值
+
 大多数流行的 JavaScript 平台都支持const声明，尽管此功能不是 ECMAScript 5 标准的一部分。为声明的变量分配一个新值const不会导致当前平台上的错误，并且根本没有效果。依赖此行为很容易出错，特别是因为 ECMAScript 2015 禁止此类分配。
 
 参考代码：codeql/javascript/ql/src/Declarations/AssignmentToConst.ql 
 
 3、错误的 HTML 过滤正则表达式
+
 可以使用正则表达式匹配一些单个的 HTML 标签（使用正则表达式解析一般的 HTML 是不可能的）。但是，如果正则表达式写得不好，则有可能绕过它，这可能会导致跨站点脚本或其他安全问题。
 
 其中一些错误是由具有非常宽容的 HTML 解析器的浏览器引起的，并且通常会呈现包含语法错误的无效 HTML。尝试匹配 HTML 的正则表达式也应该识别包含此类语法错误的标签。
@@ -62,26 +65,31 @@ Vue 框架以实例作为接收者调用 Vue 实例的方法。然而，箭头�
 参考代码：codeql/javascript/ql/src/Security/CWE-116/BadTagFilter.ql 
 
 4、敏感信息的明文存储
+
 获得存储访问权限的攻击者可以访问未加密存储的敏感信息。这对于存储在最终用户机器上的 cookie 尤为重要。
 
 参考代码：codeql/javascript/ql/src/Security/CWE-312/CleartextStorage.ql
 
 5、客户端 URL 重定向
+
 重定向到由攻击者可能控制的 DOM 部分构建的 URL 可以促进网络钓鱼攻击。在这些攻击中，毫无戒心的用户可能会被重定向到一个恶意站点，该站点看起来与他们打算访问的真实站点非常相似，但由攻击者控制。
 
 参考代码：codeql/javascript/ql/src/Security/CWE-601/ClientSideUrlRedirect.ql 
 
 6、客户端跨站脚本
+
 直接将用户输入（例如，URL 查询参数）写入网页而未先正确清理输入，会导致跨站点脚本漏洞。
 
 参考代码：codeql/javascript/ql/src/Security/CWE-079/Xss.ql 
 
 7、代码注入
+
 直接将用户输入（例如，HTTP 请求参数）评估为代码而不首先正确清理输入允许攻击者任意代码执行。当用户输入被视为 JavaScript，或传递给将其解释为要评估的表达式的框架时，可能会发生这种情况。示例包括 AngularJS 表达式或 JQuery 选择器。
 
 参考代码：codeql/javascript/ql/src/Security/CWE-094/CodeInjection.ql 
 
 8、通过不安全连接下载敏感文件
+
 通过未加密的连接下载可执行文件或其他敏感文件会使服务器容易受到中间人攻击 (MITM)。这种攻击可以让攻击者在下载的文件中插入任意内容，在最坏的情况下，还可以让攻击者在易受攻击的系统上执行任意代码。
 
 参考代码：codeql/javascript/ql/src/Security/CWE-829/InsecureDownload.ql 
