@@ -1,7 +1,7 @@
 ---
-title: 记SQL注入漏洞操练
+title: SQL注入-sqlmap详解
 author: Pandaho
-date: 2021-08-09 20:00:00 
+date: 2022-01-25 20:00:00 
 categories: [Project] 
 tags: [security]
 image: /assets/img/sql-injection/cover.png
