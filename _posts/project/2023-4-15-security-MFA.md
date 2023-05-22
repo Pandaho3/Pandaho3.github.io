@@ -8,8 +8,6 @@ image: /assets/img/security-MFA/cover.png
 ---
 
 
-
-
 ## **法律声明**
 
 **中华人民共和国刑法：** 第285、286、287条
