@@ -111,7 +111,7 @@ MySQL 是 Django 应用程序的后端数据库管理系统，它支持关系型
 
 总之，Django、Python、MySQL 架构是一种高效、安全、可扩展的 Web 应用程序开发架构，它结合了 Django 的高效性、Python 的简洁性和 MySQL 的可靠性，可以满足各种规模和类型的应用程序开发需求。
 
-### **Bootstrap:**
+### **_Bootstrap:**
 Bootstrap 是由 Twitter 创建的流行的开源前端 Web 开发框架。它是一组预先设计的 HTML、CSS 和 JavaScript 模板，开发人员可以使用它们快速轻松地创建响应式、移动优先的网页和 Web 应用程序。
 
 Bootstrap 包括各种 UI 组件，例如表单、按钮、警报、模式、下拉菜单和导航栏，以及强大的网格系统，允许开发人员为其网页创建响应式布局。
