@@ -1,11 +1,12 @@
 ﻿---
-title:MFA密钥管理系统设计
-author:Pandaho
-date:2023-4-1520:00:00
-categories:[Project]
-tags:[security]
-image:/assets/img/security-MFA/cover.png
+title: MFA密钥管理系统设计
+author: Pandaho
+date: 2023-4-1520:00:00
+categories: [Project]
+tags: [security]
+image: /assets/img/security-MFA/cover.png
 ---
+
 ## **法律声明**
 **中华人民共和国刑法：**第285、286、287条
 **第二百八十五条**违反国家规定，侵入国家事务、国防建设、尖端科学技术领域的计算机信息系统的，处三年以下有期徒刑或者拘役。
