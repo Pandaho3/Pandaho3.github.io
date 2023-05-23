@@ -1,7 +1,7 @@
 ﻿---
 title: MFA密钥管理系统设计
 author: Pandaho
-date: 2023-4-1520:00:00
+date: 2023-4-15 20:00:00
 categories: [Project]
 tags: [security]
 image: /assets/img/security-MFA/cover.png
