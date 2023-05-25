@@ -82,6 +82,81 @@ Python是一种高级编程语言，因为它具有简单易学、开发效率�
 在Django、Python、MySQL架构中，Django是Web应用程序的核心框架，它使用Python语言编写，具有高效、安全、可扩展的特点，同时也支持各种第三方库和插件。开发人员可以使用Django的各种工具和功能，包括ORM（对象关系映射）、路由、视图、模板等，快速构建出一个完整的Web应用程序。Python是Django的基础语言，它是一种解释性、面向对象、动态类型的高级编程语言，具有易读易写、代码简洁、模块丰富等特点。在Django开发中，开发人员可以使用Python的各种特性和库，实现各种复杂的业务逻辑和数据操作。  
 MySQL是Django应用程序的后端数据库管理系统，它支持关系型数据存储和操作，包括各种数据类型、查询语言、事务控制等。Django提供了内置的ORM工具，可以将Python对象映射到MySQL数据库中，使开发人员可以使用Python代码来操作数据库，而无需直接使用SQL语言。同时，Django还支持各种第三方数据库管理系统，包括PostgreSQL、Oracle、SQLite等。  
 总之，Django、Python、MySQL架构是一种高效、安全、可扩展的Web应用程序开发架构，它结合了Django的高效性、Python的简洁性和MySQL的可靠性，可以满足各种规模和类型的应用程序开发需求。
+#### **code模块:**
+```html
+{%loadstatic%}
+<!DOCTYPEhtml>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MFA管理系统</title>
+<link rel="stylesheet"href="{%static'bootstrap/css/bootstrap.min.css'%}">
+<style>
+table{
+border-collapse:collapse;
+margin:20pxauto;
+}
+th,td{
+padding:10px;
+text-align:center;
+}
+th{
+background-color:#ddd;
+}
+tr:nth-child(even){
+background-color:#f2f2f2;
+}
+a{
+text-decoration:none;
+}
+button{
+background-color:#4CAF50;
+color:white;
+padding:10px20px;
+border:none;
+border-radius:4px;
+cursor:pointer;
+}
+.bottom-left{
+position:fixed;
+bottom:0;
+left:0;
+font-size:24px;
+font-weight:bold;
+}
+</style>
+</head>
+<body>
+<h1>MFA仓库</h1>
+<div class="bottom-left">使用CTRL+F可快速查找</div>
+<a href="/info/add/"><button>添加</button></a>
+<table class="table">
+<thead class="thead-dark">
+<tr>
+<th scope="col">knoxID</th>
+<th scope="col">MFA_name（唯一值）</th>
+<th scope="col">获取验证口令</th>
+<th scope="col">删除</th>
+</tr>
+</thead>
+<tbody>
+{%forobjindata_list%}
+<tr>
+<td>{{obj.knoxID_M}}</td>
+<td>{{obj.MFA_name_M}}</td>
+<td>
+<a href="/info/password/?MFA_key={{obj.MFA_name_M}}">获取</a>
+</td>
+<td>
+<a href="/info/delete/?MFA_name={{obj.MFA_name_M}}">删除</a>
+</td>
+</tr>
+{%endfor%}
+</tbody>
+</table>
+</body>
+</html>
+```
 ## **参考来源**
 
 [OpenAI](https://chat.openai.com/)  
